@@ -110,9 +110,10 @@ const ServicesPage = () => {
                       <ResponsiveImage
                         asset={service.img}
                         alt={service.title}
+                        fill
                         sizes="(min-width: 1024px) 50vw, 100vw"
-                        pictureClassName="absolute inset-0 block"
-                        imgClassName="absolute inset-0 w-full h-full object-cover"
+                        pictureClassName="contents"
+                        imgClassName="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
@@ -208,9 +209,10 @@ const ServicesPage = () => {
                     <ResponsiveImage
                       asset={selectedService.img}
                       alt={selectedService.title}
+                      fill
                       sizes="(min-width: 1024px) 50vw, 100vw"
-                      pictureClassName="absolute inset-0 block"
-                      imgClassName="absolute inset-0 w-full h-full object-cover opacity-70"
+                      pictureClassName="contents"
+                      imgClassName="w-full h-full object-cover opacity-70"
                       fetchPriority="high"
                     />
                   </div>

@@ -14,6 +14,8 @@ interface ResponsiveImageProps {
   loading?: LoadingValue;
   decoding?: DecodingValue;
   fetchPriority?: FetchPriorityValue;
+  /** When true, omits width/height attrs so CSS can control dimensions freely */
+  fill?: boolean;
 }
 
 const ResponsiveImage = ({
@@ -25,16 +27,17 @@ const ResponsiveImage = ({
   loading = 'lazy',
   decoding = 'async',
   fetchPriority,
+  fill = false,
 }: ResponsiveImageProps) => (
   <picture className={pictureClassName}>
     <source srcSet={asset.srcSet} sizes={sizes} type="image/webp" />
     <img
       src={asset.src}
       alt={alt}
-      width={asset.width}
-      height={asset.height}
+      {...(!fill && { width: asset.width, height: asset.height })}
       sizes={sizes}
       className={imgClassName}
+      style={fill ? { aspectRatio: 'auto' } : undefined}
       loading={loading}
       decoding={decoding}
       fetchPriority={fetchPriority}
@@ -43,3 +46,4 @@ const ResponsiveImage = ({
 );
 
 export default ResponsiveImage;
+
