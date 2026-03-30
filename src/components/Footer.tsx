@@ -59,7 +59,7 @@ const Footer = () => {
               {offices.map((office) => (
                 <div
                   key={office.name}
-                  className="space-y-3 p-5 sm:p-6 hover:bg-white/5 transition-all duration-500 rounded-sm bg-white/[0.02]"
+                  className="space-y-3 p-5 sm:p-6 hover:bg-white/5 transition-all duration-500 rounded-sm bg-white/2"
                 >
                   <div className="label-sm text-primary">{office.name}</div>
                   <address className="text-xs sm:text-sm text-white/80 font-medium leading-relaxed not-italic">

@@ -112,8 +112,7 @@ const ServicesPage = () => {
                         alt={service.title}
                         fill
                         sizes="(min-width: 1024px) 50vw, 100vw"
-                        pictureClassName="contents"
-                        imgClassName="w-full h-full object-cover"
+                        pictureClassName="absolute inset-0"
                         loading="lazy"
                       />
                     </div>
@@ -211,8 +210,8 @@ const ServicesPage = () => {
                       alt={selectedService.title}
                       fill
                       sizes="(min-width: 1024px) 50vw, 100vw"
-                      pictureClassName="contents"
-                      imgClassName="w-full h-full object-cover opacity-70"
+                      pictureClassName="absolute inset-0"
+                      imgClassName="opacity-70"
                       fetchPriority="high"
                     />
                   </div>

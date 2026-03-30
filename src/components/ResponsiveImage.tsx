@@ -29,15 +29,17 @@ const ResponsiveImage = ({
   fetchPriority,
   fill = false,
 }: ResponsiveImageProps) => (
-  <picture className={pictureClassName}>
+  <picture
+    className={`${pictureClassName} ${fill ? 'block w-full h-full' : ''}`}
+  >
     <source srcSet={asset.srcSet} sizes={sizes} type="image/webp" />
     <img
       src={asset.src}
       alt={alt}
       {...(!fill && { width: asset.width, height: asset.height })}
       sizes={sizes}
-      className={imgClassName}
-      style={fill ? { aspectRatio: 'auto' } : undefined}
+      className={`${imgClassName} ${fill ? 'w-full! h-full! object-cover' : ''}`}
+      style={fill ? { width: '100%', height: '100%', objectFit: 'cover' } : undefined}
       loading={loading}
       decoding={decoding}
       fetchPriority={fetchPriority}

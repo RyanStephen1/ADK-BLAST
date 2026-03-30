@@ -10,7 +10,7 @@ function App() {
       <Router>
         <div className="flex flex-col min-h-screen font-sans">
           <Navbar />
-          <main id="main-content" role="main" className="flex-grow" tabIndex={-1}>
+          <main id="main-content" role="main" className="grow" tabIndex={-1}>
             <AppRoutes />
           </main>
           <Footer />
