@@ -54,7 +54,7 @@ const Navbar = () => {
 
           {/* Logo - Industrial Architect Specs */}
           <Link to="/" className="flex items-center gap-3 sm:gap-4 group relative shrink-0">
-            <div className="h-10 sm:h-12 md:h-14 lg:h-16 flex items-center justify-center relative z-10" style={{ minWidth: 'clamp(180px, 40vw, 320px)', aspectRatio: '400/72' }}>
+            <div className="h-10 sm:h-12 md:h-14 lg:h-16 flex items-center justify-center relative z-10" style={{ minWidth: 'clamp(140px, 30vw, 280px)', aspectRatio: '400/72' }}>
               <img
                 src={assetPaths.brand.logoMark}
                 alt="ADK Co., LTD"
@@ -69,7 +69,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Nav - Editorial Authority */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-10">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-10">
             {navLinks.map((link) => (
               <div
                 key={link.name}
@@ -88,7 +88,7 @@ const Navbar = () => {
                       onFocus={() => setActiveDropdown(link.name)}
                       aria-expanded={activeDropdown === link.name}
                       aria-haspopup="true"
-                      className={`flex items-center gap-2 xl:gap-3 label-lg transition-all duration-300 cursor-pointer whitespace-nowrap ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface hover:text-primary'
+                      className={`flex items-center gap-2 xl:gap-3 label-md xl:label-lg transition-all duration-300 cursor-pointer whitespace-nowrap ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface hover:text-primary'
                         }`}
                     >
                       {link.name}
@@ -122,7 +122,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path || '#'}
-                    className={`label-lg transition-all duration-300 relative group/link whitespace-nowrap ${location.pathname === link.path ? 'text-primary' : 'text-on-surface hover:text-primary'
+                    className={`label-md xl:label-lg transition-all duration-300 relative group/link whitespace-nowrap ${location.pathname === link.path ? 'text-primary' : 'text-on-surface hover:text-primary'
                       }`}
                   >
                     {link.name}
@@ -137,7 +137,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3 sm:gap-4 lg:gap-6">
             <Link
               to="/#contact"
-              className="bg-primary text-on-primary px-4 sm:px-6 xl:px-8 py-2.5 sm:py-3.5 label-lg hover:bg-primary-container hover:-translate-y-1 transition-all shadow-lg hidden md:block rounded-sm whitespace-nowrap"
+              className="bg-primary text-on-primary px-4 xl:px-8 py-2.5 sm:py-3.5 label-md xl:label-lg hover:bg-primary-container hover:-translate-y-1 transition-all shadow-lg hidden md:block rounded-sm whitespace-nowrap"
             >
               Consultation
             </Link>
