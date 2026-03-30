@@ -88,7 +88,7 @@ const Navbar = () => {
                       onFocus={() => setActiveDropdown(link.name)}
                       aria-expanded={activeDropdown === link.name}
                       aria-haspopup="true"
-                      className={`flex items-center gap-2 xl:gap-3 label-md transition-all duration-300 cursor-pointer whitespace-nowrap ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface hover:text-primary'
+                      className={`flex items-center gap-2 xl:gap-3 label-lg transition-all duration-300 cursor-pointer whitespace-nowrap ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface hover:text-primary'
                         }`}
                     >
                       {link.name}
@@ -109,7 +109,7 @@ const Navbar = () => {
                                 key={item.name}
                                 to={item.path}
                                 role="menuitem"
-                                className="block px-8 py-4 label-sm text-on-surface/60 hover:text-primary hover:bg-surface-container-low transition-all duration-300 border-b border-outline-variant/5 last:border-0"
+                                className="block px-8 py-4 label-md text-on-surface/60 hover:text-primary hover:bg-surface-container-low transition-all duration-300 border-b border-outline-variant/5 last:border-0"
                               >
                                 {item.name}
                               </Link>
@@ -122,7 +122,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path || '#'}
-                    className={`label-md transition-all duration-300 relative group/link whitespace-nowrap ${location.pathname === link.path ? 'text-primary' : 'text-on-surface hover:text-primary'
+                    className={`label-lg transition-all duration-300 relative group/link whitespace-nowrap ${location.pathname === link.path ? 'text-primary' : 'text-on-surface hover:text-primary'
                       }`}
                   >
                     {link.name}
@@ -137,7 +137,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3 sm:gap-4 lg:gap-6">
             <Link
               to="/#contact"
-              className="bg-primary text-on-primary px-4 sm:px-6 xl:px-8 py-2.5 sm:py-3.5 label-md hover:bg-primary-container hover:-translate-y-1 transition-all shadow-lg hidden md:block rounded-sm whitespace-nowrap"
+              className="bg-primary text-on-primary px-4 sm:px-6 xl:px-8 py-2.5 sm:py-3.5 label-lg hover:bg-primary-container hover:-translate-y-1 transition-all shadow-lg hidden md:block rounded-sm whitespace-nowrap"
             >
               Consultation
             </Link>
@@ -170,7 +170,7 @@ const Navbar = () => {
                   <button
                     onClick={() => setActiveDropdown(activeDropdown === link.name ? null : link.name)}
                     aria-expanded={activeDropdown === link.name}
-                    className={`block py-3 label-md flex-1 text-left cursor-pointer ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface/60'}`}
+                    className={`block py-3 label-lg flex-1 text-left cursor-pointer ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface/60'}`}
                   >
                     <span className="text-[8px] opacity-30 mr-4 font-mono">0{idx + 1}</span>
                     {link.name}
@@ -178,7 +178,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path || '#'}
-                    className="mobile-nav-link block py-3 label-md flex-1 text-left"
+                    className="mobile-nav-link block py-3 label-lg flex-1 text-left"
                     aria-current={location.pathname === link.path ? 'page' : undefined}
                   >
                     <span className="text-[8px] opacity-30 mr-4 font-mono">0{idx + 1}</span>
@@ -206,7 +206,7 @@ const Navbar = () => {
                     <Link
                       key={item.name}
                       to={item.path}
-                      className="mobile-nav-link block py-3 label-sm text-on-surface/50 hover:text-primary transition-colors"
+                      className="mobile-nav-link block py-3 label-md text-on-surface/50 hover:text-primary transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -219,7 +219,7 @@ const Navbar = () => {
           <div className="pt-4 sm:pt-6 md:hidden">
             <Link
               to="/#contact"
-              className="mobile-nav-link block w-full bg-primary text-on-primary text-center px-8 py-5 label-md rounded-sm"
+              className="mobile-nav-link block w-full bg-primary text-on-primary text-center px-8 py-5 label-lg rounded-sm"
             >
               Start Project Request
             </Link>
