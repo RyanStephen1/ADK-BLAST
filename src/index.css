@@ -145,19 +145,6 @@ body {
   min-height: 100vh;
 }
 
-/* Prevent images from causing layout shift */
-img {
-  content-visibility: auto;
-}
-
-/* Footer layout stability - reserve space from initial paint */
-footer {
-  content-visibility: auto;
-  contain: layout style;
-  min-height: 500px;
-  display: block;
-}
-
 html {
   scroll-behavior: smooth;
 }
