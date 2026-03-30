@@ -19,13 +19,12 @@ const Footer = () => {
           <div className="lg:col-span-4 space-y-8 sm:space-y-10">
             <div className="flex items-center gap-4 sm:gap-6">
               <div
-                className="flex items-center justify-center brightness-0 invert opacity-80 w-48 sm:w-56"
-                style={{ aspectRatio: '200/80' }}
+                className="flex items-center justify-center brightness-0 invert opacity-80 w-48 sm:w-56 aspect-[5/2]"
               >
                 <img
                   src={assetPaths.brand.logoFull}
                   alt="ADK Co., LTD"
-                  className="w-full h-full object-contain"
+                  className="block w-full h-full object-contain"
                   width={200}
                   height={80}
                   decoding="async"
