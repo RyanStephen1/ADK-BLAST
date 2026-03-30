@@ -489,38 +489,50 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Core Values - Refined Architectural Grid */}
-        <section className="relative overflow-hidden bg-surface py-20 sm:py-24 md:py-32 xl:py-40">
-          {/* Subtle Technical Detail */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-primary/10"></div>
+        {/* Core Values - "The Atmospheric Core" Redesign */}
+        <section className="relative overflow-hidden bg-on-background py-24 sm:py-32 md:py-40">
+          {/* Architectural Schematic Grid */}
+          <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+            style={{ backgroundImage: 'linear-gradient(#primary 1px, transparent 1px), linear-gradient(90deg, #primary 1px, transparent 1px)', backgroundSize: '120px 120px' }}>
+          </div>
+          <div className="absolute inset-0 bg-linear-to-b from-on-background via-transparent to-on-background/80 pointer-events-none"></div>
 
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <div className="mb-14 max-w-3xl sm:mb-16 md:mb-20 xl:mb-24">
-              <span className="label-md text-primary block mb-6">The ADK Standard</span>
-              <h2 className="text-4xl font-black uppercase italic tracking-tighter text-on-background sm:text-5xl lg:text-6xl xl:text-7xl">
-                <span className="text-primary">Core Values</span>
+            <div className="mb-20 max-w-4xl text-center mx-auto">
+              <span className="label-md text-primary mb-6 block font-black tracking-[0.4em] uppercase">Foundational Pillars</span>
+              <h2 className="text-5xl font-black uppercase italic tracking-tighter text-white sm:text-6xl lg:text-7xl xl:text-8xl">
+                The <span className="text-primary/40">ADK Standard.</span>
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-8 xl:gap-10">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5 xl:gap-8">
               {homeValues.map((v, i) => {
                 const ValueIcon = v.icon;
 
                 return (
-                  <div key={i} className="group relative flex flex-col items-start overflow-hidden rounded-sm bg-white p-6 shadow-ambient transition-all duration-500 hover:-translate-y-2 sm:p-8 xl:p-10">
-                    {/* Accent Top Bar */}
-                    <div className="absolute top-0 left-0 w-full h-1.5 bg-primary-container group-hover:bg-primary transition-colors"></div>
-
-                    <div className="mb-6 text-primary transition-transform duration-500 group-hover:scale-110 sm:mb-8 md:mb-10">
-                      <ValueIcon size={32} strokeWidth={1.5} />
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                    className="group relative flex flex-col items-start overflow-hidden rounded-sm bg-white/[0.03] backdrop-blur-xl border border-white/10 p-8 shadow-2xl transition-all duration-700 hover:bg-white/[0.06] hover:border-primary/40 hover:-translate-y-2 lg:p-10"
+                  >
+                    {/* Industrial Index Detail */}
+                    <div className="absolute -right-2 -top-2 text-7xl font-black text-white/[0.02] font-mono transition-colors group-hover:text-primary/10 select-none">
+                      0{i + 1}
                     </div>
 
-                    <h5 className="mb-3 text-base font-black uppercase tracking-tight text-on-background sm:mb-4 sm:text-lg">{v.title}</h5>
-                    <p className="text-on-surface-variant text-[11px] leading-relaxed font-medium uppercase tracking-wider">{v.desc}</p>
+                    <div className="mb-10 text-primary transition-transform duration-700 group-hover:scale-110">
+                      <ValueIcon size={40} strokeWidth={1} />
+                    </div>
 
-                    {/* Hover Industrial Detail */}
-                    <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-primary/5 rounded-full scale-0 group-hover:scale-100 transition-transform duration-700"></div>
-                  </div>
+                    <h5 className="mb-4 text-lg font-black uppercase tracking-tight text-white group-hover:text-primary transition-colors sm:text-xl">{v.title}</h5>
+                    <p className="text-white/50 text-[10px] sm:text-[11px] leading-relaxed font-medium uppercase tracking-[0.1em]">{v.desc}</p>
+
+                    {/* Glowing Primary Footer Accent */}
+                    <div className="absolute bottom-0 left-0 h-1 w-0 bg-primary shadow-[0_0_15px_rgba(0,71,171,0.6)] transition-all duration-700 group-hover:w-full"></div>
+                  </motion.div>
                 );
               })}
             </div>
