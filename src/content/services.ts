@@ -52,7 +52,7 @@ export const serviceCategories: ServiceContent[] = [
       { name: 'Structural Rectification', detail: 'On-site structural restoration and reinforcement of legacy industrial assets under rigid shutdown constraints.' },
       { name: 'Advanced Fabrication', detail: 'Heavy-gauge welding and assembly of industrial towers, frames, and complex refinery skeletal systems.' },
       { name: 'Precision Structural Engineering', detail: 'Certified analysis and fabrication of architectural steel frameworks for refineries and power plants.' },
-      { name: 'Ship Haul Repair', detail: 'Specialized repair and maintenance services for ship hulls and underwater structures, performed during dry-docking operations.' },
+      { name: 'Ship Hull Repair', detail: 'Specialized repair and maintenance services for ship hulls and underwater structures, performed during dry-docking operations.' },
     ],
   },
   {
