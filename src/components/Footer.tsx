@@ -9,34 +9,30 @@ const Footer = () => {
     <footer
       className="bg-navy-900 text-white w-full relative overflow-hidden"
       role="contentinfo"
-      style={{ contain: 'layout style', contentVisibility: 'auto', minHeight: '500px' }}
     >
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 -mr-32 -mt-32 rounded-full blur-3xl opacity-20" aria-hidden="true" />
 
       <div
         className="max-w-screen-2xl mx-auto px-5 sm:px-6 md:px-10 py-16 sm:py-20 lg:py-24 relative z-10"
-        style={{ contain: 'layout' }}
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20">
-          <div className="lg:col-span-4 space-y-8 sm:space-y-10" style={{ contain: 'layout' }}>
+          <div className="lg:col-span-4 space-y-8 sm:space-y-10">
             <div className="flex items-center gap-4 sm:gap-6">
               <div
-                className="h-14 sm:h-16 md:h-20 flex items-center justify-center brightness-0 invert opacity-80"
-                style={{ minWidth: '200px', contain: 'layout strict', aspectRatio: '200/80' }}
+                className="flex items-center justify-center brightness-0 invert opacity-80"
               >
                 <img
                   src={assetPaths.brand.logoFull}
                   alt="ADK Co., LTD"
-                  className="h-full w-auto object-contain"
+                  className="w-48 sm:w-56 h-auto object-contain"
                   width={200}
                   height={80}
                   decoding="async"
                   loading="lazy"
-                  style={{ aspectRatio: '200/80' }}
                 />
               </div>
             </div>
-            <p className="body-lg text-white/40 leading-relaxed max-w-md italic text-sm sm:text-base" style={{ contain: 'layout', minHeight: '4rem' }}>
+            <p className="body-lg text-white/40 leading-relaxed max-w-md italic text-sm sm:text-base">
               Global industrial services provider specializing in high-precision engineering, infrastructure maintenance, and maritime operations across international jurisdictions.
             </p>
           </div>
