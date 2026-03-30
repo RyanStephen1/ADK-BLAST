@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0047AB" />
+  <title>ADK Co., LTD | Industrial Precision & Engineering Excellence</title>
+  
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Load Google Fonts with font-display:optional (non-blocking, no layout shift) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=optional" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=optional" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=optional" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=optional" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=optional" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=optional" />
+  </noscript>
+
+  <!-- Inline font-face with local fallback -->
+  <style>
+    @font-face {
+      font-family: 'Plus Jakarta Sans';
+      font-style: normal;
+      font-weight: 300 800;
+      font-display: optional;
+      src: local('Segoe UI'), local('Arial'), local('Helvetica');
+      size-adjust: 100%;
+    }
+    @font-face {
+      font-family: 'Material Symbols Outlined';
+      font-style: normal;
+      font-weight: 100 700;
+      font-display: optional;
+      src: local('Material Icons'), local('Arial');
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+
+  <!-- Critical CSS (inlined for zero render-blocking) -->
+  <style>
+    *,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}
+    body{margin:0;line-height:inherit}
+    img{display:block;max-width:100%;height:auto}
+    .skip-link{position:absolute;left:1rem;top:1rem;z-index:9999;transform:translateY(-100%);background-color:#0047AB;padding:0.75rem 1rem;font-size:0.875rem;font-weight:700;color:#fff;transition:transform .2s}
+    .skip-link:focus{transform:translateY(0)}
+    html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth}
+    body{background-color:#fff;color:#141a32;font-synthesis:none;text-rendering:optimizeLegibility}
+    img{content-visibility:auto}
+    .fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}
+    .z-50{z-index:50}.z-10{z-index:10}.z-0{z-index:0}
+    .bg-white{background-color:#fff}.bg-navy-900{background-color:#141a32}
+    .text-white{color:#fff}.text-on-surface{color:#0A1128}
+    .h-8{height:2rem}.w-auto{width:auto}
+    .flex{display:flex}.grid{display:grid}
+    .items-center{align-items:center}.justify-between{justify-content:between}
+    .py-3{padding-top:0.75rem;padding-bottom:0.75rem}
+    .shadow-ambient{box-shadow:0 16px 32px 0 rgba(20,26,50,0.06)}
+  </style>
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" as="image" href="/assets/home/hero/hero-1.webp" fetchpriority="high" />
+</head>
+
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <form name="contact-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="text" name="service" />
+    <input type="text" name="specialization" />
+    <textarea name="message"></textarea>
+    <input type="file" name="attachment" />
+    <input type="text" name="bot-field" />
+  </form>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
