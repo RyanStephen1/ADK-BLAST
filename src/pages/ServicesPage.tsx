@@ -106,13 +106,13 @@ const ServicesPage = () => {
                     className="group relative w-full cursor-pointer lg:w-1/2"
                     onClick={() => handleOpenModal(service)}
                   >
-                    <div className="aspect-4/3 md:aspect-video lg:aspect-4/3 rounded-default overflow-hidden shadow-ambient bg-on-background">
+                    <div className="aspect-4/3 md:aspect-video lg:aspect-4/3 relative rounded-default overflow-hidden shadow-ambient bg-on-background">
                       <ResponsiveImage
                         asset={service.img}
                         alt={service.title}
                         sizes="(min-width: 1024px) 50vw, 100vw"
-                        pictureClassName="contents"
-                        imgClassName="w-full h-full object-cover"
+                        pictureClassName="absolute inset-0 block"
+                        imgClassName="absolute inset-0 w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
@@ -209,8 +209,8 @@ const ServicesPage = () => {
                       asset={selectedService.img}
                       alt={selectedService.title}
                       sizes="(min-width: 1024px) 50vw, 100vw"
-                      pictureClassName="contents"
-                      imgClassName="w-full h-full object-cover opacity-70"
+                      pictureClassName="absolute inset-0 block"
+                      imgClassName="absolute inset-0 w-full h-full object-cover opacity-70"
                       fetchPriority="high"
                     />
                   </div>
