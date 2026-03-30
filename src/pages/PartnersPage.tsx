@@ -101,7 +101,6 @@ const PartnersPage = () => {
                       <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Project Hub</span>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface">{partner.location}</span>
                     </div>
-                    <span className="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform duration-500">east</span>
                   </div>
                 </motion.div>
               ))}

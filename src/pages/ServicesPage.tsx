@@ -106,13 +106,13 @@ const ServicesPage = () => {
                     className="group relative w-full cursor-pointer lg:w-1/2"
                     onClick={() => handleOpenModal(service)}
                   >
-                    <div className="aspect-4/3 md:aspect-video lg:aspect-4/3 rounded-default overflow-hidden shadow-ambient bg-on-background relative">
+                    <div className="aspect-4/3 md:aspect-video lg:aspect-4/3 rounded-default overflow-hidden shadow-ambient bg-on-background">
                       <ResponsiveImage
                         asset={service.img}
                         alt={service.title}
                         sizes="(min-width: 1024px) 50vw, 100vw"
-                        pictureClassName="absolute inset-0 block h-full w-full"
-                        imgClassName="absolute inset-0 h-full w-full object-cover"
+                        pictureClassName="block w-full h-full"
+                        imgClassName="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
@@ -203,14 +203,17 @@ const ServicesPage = () => {
 
                 {/* Left Panel: Visual Impact */}
                 <div className="relative min-h-[220px] flex-shrink-0 overflow-hidden bg-on-background sm:min-h-[280px] lg:min-h-0 lg:w-1/2">
-                  <ResponsiveImage
-                    asset={selectedService.img}
-                    alt={selectedService.title}
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    pictureClassName="absolute inset-0 block h-full w-full"
-                    imgClassName="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-1000 group-hover:scale-105"
-                    fetchPriority="high"
-                  />
+                  {/* Background image fills the entire panel */}
+                  <div className="absolute inset-0">
+                    <ResponsiveImage
+                      asset={selectedService.img}
+                      alt={selectedService.title}
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      pictureClassName="block w-full h-full"
+                      imgClassName="w-full h-full object-cover opacity-70 transition-transform duration-1000 group-hover:scale-105"
+                      fetchPriority="high"
+                    />
+                  </div>
                   {/* Architectural Overlays */}
                   <div className="absolute inset-0 bg-linear-to-t from-on-background via-on-background/40 to-transparent"></div>
                   <div className="absolute inset-0 bg-linear-to-r from-transparent to-on-background/20 hidden lg:block"></div>
