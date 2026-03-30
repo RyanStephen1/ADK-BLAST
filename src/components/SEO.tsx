@@ -31,7 +31,7 @@ const SEO: React.FC<SEOProps> = ({
       {keywords && <meta name="keywords" content={keywords} />}
       <link rel="canonical" href={url} />
       <meta name="robots" content="index, follow" />
-      
+
       {/* Open Graph */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
@@ -46,10 +46,6 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image || defaultImage} />
-
-      {/* Performance: Preconnect hints */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
       {structuredData && (
         <script type="application/ld+json">

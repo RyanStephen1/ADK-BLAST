@@ -2,23 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// Plugin to remove render-blocking CSS
-const removeRenderBlockingCSS = () => ({
-  name: 'remove-render-blocking-css',
-  transformIndexHtml(html) {
-    return html.replace(
-      /<link rel="stylesheet" crossorigin href="\/assets\/index\.css">/g,
-      '<link rel="stylesheet" href="/assets/index.css" media="print" onload="this.media=\'all\'"><noscript><link rel="stylesheet" href="/assets/index.css"></noscript>'
-    );
-  }
-});
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    removeRenderBlockingCSS(),
   ],
   build: {
     target: 'esnext',
