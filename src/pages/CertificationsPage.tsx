@@ -148,7 +148,14 @@ const CertificationsPage = () => {
                   className="flex min-h-[360px] flex-col justify-between border-b border-r border-black/5 bg-white p-5 sm:min-h-[420px] sm:p-6 md:p-8 lg:min-h-[500px] lg:p-10"
                 >
                   <div className="group flex flex-1 items-center justify-center overflow-hidden bg-surface-container-lowest p-4 sm:p-6 md:p-8">
-                    <img src={doc.img} alt={doc.title} className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+                    <img
+                      src={doc.img}
+                      alt={doc.title}
+                      className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                      decoding="async"
+                      style={{ imageRendering: 'high-quality' }}
+                    />
                   </div>
 
                   <div className="mt-6 sm:mt-8 md:mt-10">
@@ -250,6 +257,11 @@ const CertificationsPage = () => {
                     className="max-h-full max-w-full object-contain shadow-2xl pointer-events-auto select-none"
                     alt="Document"
                     decoding="async"
+                    style={{
+                      imageRendering: 'high-quality',
+                      // @ts-ignore - webkit prefix for sharpening scanned docs
+                      WebkitOptimizeContrast: 'initial'
+                    }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 </div>
