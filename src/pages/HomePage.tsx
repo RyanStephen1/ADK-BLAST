@@ -465,21 +465,18 @@ const HomePage: React.FC = () => {
                 return (
                   <div
                     key={i}
-                    className={`flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-2 shadow-ambient transition-all duration-500 hover:scale-105 ${isBigLogo
-                      ? 'h-24 w-52 sm:h-28 sm:w-64 md:h-36 md:w-80 p-4 md:p-6'
-                      : 'h-20 w-44 sm:h-24 sm:w-52 md:h-28 md:w-64 p-2 md:p-3'
-                      }`}
-                    style={{ aspectRatio: isBigLogo ? '320/144' : '176/80' }}
+                    className="flex h-20 w-44 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-2 shadow-ambient transition-all duration-500 hover:scale-105 sm:h-24 sm:w-52 sm:p-2 md:h-28 md:w-64 md:p-3"
+                    style={{ aspectRatio: '176/80' }}
                   >
                     <img
                       src={logo}
                       alt="Partner Brand"
-                      className={`max-h-full max-w-full object-contain ${isBigLogo ? 'scale-110' : ''}`}
-                      width={isBigLogo ? 280 : 200}
-                      height={isBigLogo ? 110 : 80}
+                      className={`max-h-full max-w-full object-contain transition-transform duration-500 ${isBigLogo ? 'scale-135' : ''}`}
+                      width={200}
+                      height={80}
                       loading="lazy"
                       decoding="async"
-                      style={{ display: 'block', aspectRatio: isBigLogo ? '280/110' : '200/80' }}
+                      style={{ display: 'block', aspectRatio: '200/80' }}
                     />
                   </div>
                 );
