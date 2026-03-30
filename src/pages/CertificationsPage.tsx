@@ -154,7 +154,7 @@ const CertificationsPage = () => {
                       className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-700"
                       loading="lazy"
                       decoding="async"
-                      style={{ imageRendering: 'high-quality' }}
+                      style={{ imageRendering: 'auto' }}
                     />
                   </div>
 
@@ -258,10 +258,10 @@ const CertificationsPage = () => {
                     alt="Document"
                     decoding="async"
                     style={{
-                      imageRendering: 'high-quality',
+                      imageRendering: 'auto',
                       // @ts-ignore - webkit prefix for sharpening scanned docs
                       WebkitOptimizeContrast: 'initial'
-                    }}
+                    } as any}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 </div>
