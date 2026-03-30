@@ -489,19 +489,18 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Core Values - "The Atmospheric Core" Redesign */}
-        <section className="relative overflow-hidden bg-on-background py-24 sm:py-32 md:py-40">
-          {/* Architectural Schematic Grid */}
-          <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
-            style={{ backgroundImage: 'linear-gradient(#primary 1px, transparent 1px), linear-gradient(90deg, #primary 1px, transparent 1px)', backgroundSize: '120px 120px' }}>
+        {/* Core Values - "High-Contrast Sky" Redesign */}
+        <section className="relative overflow-hidden bg-surface-container-high py-24 sm:py-32 md:py-40">
+          {/* Subtle Technical Schematic */}
+          <div className="absolute inset-0 opacity-[0.08] pointer-events-none"
+            style={{ backgroundImage: 'linear-gradient(#0047AB 1px, transparent 1px), linear-gradient(90deg, #0047AB 1px, transparent 1px)', backgroundSize: '100px 100px' }}>
           </div>
-          <div className="absolute inset-0 bg-linear-to-b from-on-background via-transparent to-on-background/80 pointer-events-none"></div>
 
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <div className="mb-20 max-w-4xl text-center mx-auto">
-              <span className="label-md text-primary mb-6 block font-black tracking-[0.4em] uppercase">Foundational Pillars</span>
-              <h2 className="text-5xl font-black uppercase italic tracking-tighter text-white sm:text-6xl lg:text-7xl xl:text-8xl">
-                The <span className="text-primary/40">ADK Standard.</span>
+            <div className="mb-20 max-w-4xl mx-auto text-center">
+              <span className="label-md text-primary mb-6 block font-black tracking-[0.4em] uppercase">The ADK Standard</span>
+              <h2 className="text-5xl font-black uppercase italic tracking-tighter text-on-background sm:text-6xl lg:text-7xl xl:text-8xl">
+                Core <span className="text-primary">Values.</span>
               </h2>
             </div>
 
@@ -516,22 +515,22 @@ const HomePage: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: i * 0.1 }}
-                    className="group relative flex flex-col items-start overflow-hidden rounded-sm bg-white/[0.03] backdrop-blur-xl border border-white/10 p-8 shadow-2xl transition-all duration-700 hover:bg-white/[0.06] hover:border-primary/40 hover:-translate-y-2 lg:p-10"
+                    className="group relative flex flex-col items-start overflow-hidden rounded-sm bg-white p-8 shadow-ambient transition-all duration-700 hover:-translate-y-2 lg:p-10"
                   >
                     {/* Industrial Index Detail */}
-                    <div className="absolute -right-2 -top-2 text-7xl font-black text-white/[0.02] font-mono transition-colors group-hover:text-primary/10 select-none">
+                    <div className="absolute -right-2 -top-2 text-7xl font-black text-primary/[0.03] font-mono transition-colors group-hover:text-primary/[0.08] select-none">
                       0{i + 1}
                     </div>
 
                     <div className="mb-10 text-primary transition-transform duration-700 group-hover:scale-110">
-                      <ValueIcon size={40} strokeWidth={1} />
+                      <ValueIcon size={40} strokeWidth={1.5} />
                     </div>
 
-                    <h5 className="mb-4 text-lg font-black uppercase tracking-tight text-white group-hover:text-primary transition-colors sm:text-xl">{v.title}</h5>
-                    <p className="text-white/50 text-[10px] sm:text-[11px] leading-relaxed font-medium uppercase tracking-[0.1em]">{v.desc}</p>
+                    <h5 className="mb-4 text-lg font-black uppercase tracking-tight text-on-background group-hover:text-primary transition-colors sm:text-xl">{v.title}</h5>
+                    <p className="text-on-surface-variant text-[11px] leading-relaxed font-medium uppercase tracking-[0.05em]">{v.desc}</p>
 
                     {/* Glowing Primary Footer Accent */}
-                    <div className="absolute bottom-0 left-0 h-1 w-0 bg-primary shadow-[0_0_15px_rgba(0,71,171,0.6)] transition-all duration-700 group-hover:w-full"></div>
+                    <div className="absolute bottom-0 left-0 h-1 w-0 bg-primary shadow-[0_0_15px_rgba(0,71,171,0.3)] transition-all duration-700 group-hover:w-full"></div>
                   </motion.div>
                 );
               })}
