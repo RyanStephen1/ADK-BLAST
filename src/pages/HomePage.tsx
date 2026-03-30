@@ -518,7 +518,7 @@ const HomePage: React.FC = () => {
                     className="group relative flex flex-col items-start overflow-hidden rounded-sm bg-white p-8 shadow-ambient transition-all duration-700 hover:-translate-y-2 lg:p-10"
                   >
                     {/* Industrial Index Detail */}
-                    <div className="absolute -right-2 -top-2 text-7xl font-black text-primary/[0.03] font-mono transition-colors group-hover:text-primary/[0.08] select-none">
+                    <div className="absolute -right-2 -top-2 text-7xl font-black text-primary/3 font-mono transition-colors group-hover:text-primary/8 select-none">
                       0{i + 1}
                     </div>
 
@@ -706,7 +706,7 @@ const HomePage: React.FC = () => {
         <section className="industrial-gradient relative overflow-hidden py-20 text-center sm:py-24 md:py-32">
           <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 md:px-8 xl:px-10">
             <h2 className="mb-10 text-3xl font-extrabold uppercase italic tracking-tighter text-white sm:text-4xl md:mb-12 md:text-5xl lg:mb-14 lg:text-6xl">Precision-Built for the World's Harshest Environments.</h2>
-            <Link to="/#contact" className="inline-flex min-h-12 items-center justify-center bg-white px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-background transition-all hover:bg-primary hover:text-white sm:px-12 md:px-16 md:py-6">Start a Conversation</Link>
+            <Link to="/#contact" className="inline-flex min-h-12 items-center justify-center bg-white px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-background transition-all hover:bg-primary">Start a Conversation</Link>
           </div>
           <div className="absolute -bottom-10 right-0 select-none text-[8rem] font-black leading-none text-white/5 sm:-bottom-16 sm:text-[12rem] lg:-right-20 lg:-bottom-20 lg:text-[20rem]">ADK</div>
         </section>

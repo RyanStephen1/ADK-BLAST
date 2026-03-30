@@ -156,7 +156,8 @@ const PartnersPage = () => {
                         <img
                           src={partner.logo}
                           alt={partner.name}
-                          className="h-full w-full object-contain pointer-events-none select-none"
+                          className={`h-full w-full object-contain pointer-events-none select-none transition-transform duration-500 ${partner.logo.includes('1590') || partner.logo.includes('siemens') || partner.logo.includes('hanjin') || partner.logo.includes('imi') ? 'scale-125' : ''
+                            }`}
                           style={{ maxHeight: '150px', maxWidth: '380px' }}
                           loading="lazy"
                           decoding="async"
@@ -237,7 +238,8 @@ const PartnersPage = () => {
                     <div className="max-w-2xl">
                       <div className="mb-5 flex items-center gap-4 sm:mb-6 sm:gap-5 md:mb-8 md:gap-6">
                         <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white p-4 shadow-ambient sm:h-24 sm:w-24 md:h-28 md:w-28 md:p-5">
-                          <img src={selectedPartner.logo} className="max-h-full max-w-full object-contain" alt="Logo" decoding="async" />
+                          <img src={selectedPartner.logo} className={`max-h-full max-w-full object-contain ${selectedPartner.logo.includes('1590') || selectedPartner.logo.includes('siemens') || selectedPartner.logo.includes('hanjin') || selectedPartner.logo.includes('imi') ? 'scale-125' : ''
+                            }`} alt="Logo" decoding="async" />
                         </div>
                       </div>
                       <h2 className="text-3xl font-extrabold uppercase italic tracking-tighter text-white sm:text-4xl lg:text-5xl xl:text-6xl">{selectedPartner.name}</h2>
