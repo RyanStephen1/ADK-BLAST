@@ -33,7 +33,8 @@ const HomePage: React.FC = () => {
     specialization: string;
     message: string;
     file: File | null;
-  }>({ name: '', email: '', service: defaultContactService, specialization: defaultSpecialization, message: '', file: null });
+    consent: boolean;
+  }>({ name: '', email: '', service: defaultContactService, specialization: defaultSpecialization, message: '', file: null, consent: false });
 
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [fileError, setFileError] = useState('');
@@ -77,10 +78,11 @@ const HomePage: React.FC = () => {
   }, [location]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
     setContactForm(prev => ({
       ...prev,
-      [name]: value,
+      [name]: val,
       ...(name === 'service' ? { specialization: defaultSpecialization } : {})
     }));
   };
@@ -128,6 +130,7 @@ const HomePage: React.FC = () => {
         specialization: defaultSpecialization,
         message: '',
         file: null,
+        consent: false,
       });
       setFileError('');
 
@@ -638,6 +641,23 @@ const HomePage: React.FC = () => {
                       <div className="relative">
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary scale-y-0 group-focus-within:scale-y-100 transition-transform duration-300"></div>
                         <textarea name="message" value={contactForm.message} onChange={handleInputChange} required className="w-full bg-surface-container-low border-none focus:ring-0 px-6 py-5 text-on-surface font-bold uppercase text-sm tracking-widest resize-none min-h-[120px]" placeholder="Describe your technical requirements..."></textarea>
+                      </div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <div className="flex items-start gap-3">
+                        <input
+                          type="checkbox"
+                          id="consent"
+                          name="consent"
+                          checked={contactForm.consent}
+                          onChange={handleInputChange}
+                          required
+                          className="mt-1 h-4 w-4 rounded border-none bg-surface-container-low text-primary focus:ring-0 cursor-pointer"
+                        />
+                        <label htmlFor="consent" className="text-[11px] leading-relaxed text-on-surface-variant/70 font-medium uppercase tracking-wider cursor-pointer">
+                          I hereby declare my consent for the processing of my personal data for the purpose of this technical inquiry, in accordance with the <Link to="/privacy-policy" className="text-primary hover:underline underline-offset-4">Privacy Policy</Link>.
+                        </label>
                       </div>
                     </div>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { historyEngagements, historyHighlightedCompanies, historyMilestones } from '../content/history';
 import { splitHighlightedText } from '../lib/text';
@@ -78,7 +78,7 @@ const HistoryPage = () => {
         </section>
 
         {/* Strategic Milestones Carousel */}
-        <section className="overflow-hidden bg-surface-container-low py-20 sm:py-24 md:py-32 xl:py-40">
+        <section className="overflow-hidden bg-surface-container-low py-12 sm:py-20 md:py-32 xl:py-40">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
             <div className="mb-12 flex flex-col gap-8 sm:mb-16 md:flex-row md:items-end md:justify-between md:gap-12 xl:mb-24">
               <div className="max-w-xl">
@@ -91,14 +91,14 @@ const HistoryPage = () => {
                   disabled={isAtStart}
                   className={`flex h-12 w-12 items-center justify-center rounded-default border border-outline-variant transition-all sm:h-14 sm:w-14 md:h-16 md:w-16 ${isAtStart ? 'cursor-not-allowed opacity-20' : 'hover:bg-primary hover:text-white'}`}
                 >
-                  <span className="material-symbols-outlined">west</span>
+                  <ArrowLeft className="w-6 h-6" />
                 </button>
                 <button
                   onClick={nextSlide}
                   disabled={isAtEnd}
                   className={`flex h-12 w-12 items-center justify-center rounded-default transition-all sm:h-14 sm:w-14 md:h-16 md:w-16 ${isAtEnd ? 'cursor-not-allowed bg-surface-container-highest text-on-surface/20' : 'bg-primary text-white hover:bg-primary-container'}`}
                 >
-                  <span className="material-symbols-outlined">east</span>
+                  <ArrowRight className="w-6 h-6" />
                 </button>
               </div>
             </div>

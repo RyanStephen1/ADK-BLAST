@@ -44,13 +44,17 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white py-3 sm:py-4 shadow-ambient border-b border-black/5" aria-label="Main navigation">
+    <nav
+      ref={dropdownRef}
+      className="fixed top-0 left-0 right-0 z-50 bg-white py-3 sm:py-4 shadow-ambient border-b border-black/5"
+      aria-label="Main navigation"
+    >
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8 xl:px-10">
-        <div className="flex justify-between items-center" ref={dropdownRef}>
+        <div className="flex justify-between items-center">
 
           {/* Logo - Industrial Architect Specs */}
           <Link to="/" className="flex items-center gap-3 sm:gap-4 group relative shrink-0">
-            <div className="h-12 sm:h-14 md:h-16 lg:h-18 flex items-center justify-center relative z-10" style={{ minWidth: '320px', aspectRatio: '400/72' }}>
+            <div className="h-10 sm:h-12 md:h-14 lg:h-16 flex items-center justify-center relative z-10" style={{ minWidth: 'clamp(180px, 40vw, 320px)', aspectRatio: '400/72' }}>
               <img
                 src={assetPaths.brand.logoMark}
                 alt="ADK Co., LTD"
@@ -155,7 +159,7 @@ const Navbar = () => {
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation menu"
-        className={`lg:hidden bg-surface-container-lowest overflow-hidden shadow-ambient transition-[max-height,opacity] duration-500 ease-out ${isOpen ? 'max-h-[85vh] opacity-100 border-t border-black/5' : 'max-h-0 opacity-0 pointer-events-none'
+        className={`lg:hidden bg-surface-container-lowest overflow-y-auto shadow-ambient transition-[max-height,opacity] duration-500 ease-out no-scrollbar ${isOpen ? 'max-h-[85vh] opacity-100 border-t border-black/5' : 'max-h-0 opacity-0 pointer-events-none'
           }`}
       >
         <div className="px-4 sm:px-6 py-6 sm:py-8 space-y-3 sm:space-y-4">
@@ -174,7 +178,6 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path || '#'}
-                    onClick={() => setIsOpen(false)}
                     className="mobile-nav-link block py-3 label-md flex-1 text-left"
                     aria-current={location.pathname === link.path ? 'page' : undefined}
                   >
@@ -203,7 +206,6 @@ const Navbar = () => {
                     <Link
                       key={item.name}
                       to={item.path}
-                      onClick={() => setIsOpen(false)}
                       className="mobile-nav-link block py-3 label-sm text-on-surface/50 hover:text-primary transition-colors"
                     >
                       {item.name}
@@ -217,7 +219,6 @@ const Navbar = () => {
           <div className="pt-4 sm:pt-6 md:hidden">
             <Link
               to="/#contact"
-              onClick={() => setIsOpen(false)}
               className="mobile-nav-link block w-full bg-primary text-on-primary text-center px-8 py-5 label-md rounded-sm"
             >
               Start Project Request

@@ -90,9 +90,9 @@ const ServicesPage = () => {
         </section>
 
         {/* Services Grid */}
-        <section className="bg-surface py-20 sm:py-24 md:py-32 xl:py-40">
+        <section className="bg-surface py-12 sm:py-20 md:py-32 xl:py-40">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <div className="grid grid-cols-1 gap-16 sm:gap-20 lg:gap-24 xl:gap-28">
+            <div className="grid grid-cols-1 gap-12 sm:gap-20 lg:gap-24 xl:gap-28">
               {serviceCategories.map((service, idx) => (
                 <div
                   key={service.id}

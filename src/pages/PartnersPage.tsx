@@ -1,16 +1,61 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { partnerProfiles } from '../content/partners';
 import type { PartnerProfile } from '../types/content';
 
 const PartnersPage = () => {
   const [selectedPartner, setSelectedPartner] = useState<PartnerProfile | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const controls = useAnimation();
+  const [isDragging, setIsDragging] = useState(false);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    const updateConstraints = () => {
+      if (carouselRef.current && innerRef.current) {
+        const carouselWidth = carouselRef.current.offsetWidth;
+        const innerWidth = innerRef.current.scrollWidth;
+        const constraintLeft = -(innerWidth - carouselWidth + 32); // 32px padding buffer
+        setConstraints({
+          left: Math.min(0, constraintLeft),
+          right: 0
+        });
+      }
+    };
+
+    // Delay calculation to ensure fonts/images are rendered
+    const timer = setTimeout(updateConstraints, 500);
+    window.addEventListener('resize', updateConstraints);
+    return () => {
+      window.removeEventListener('resize', updateConstraints);
+      clearTimeout(timer);
+    };
+  }, [partnerProfiles]);
+
+  const handleArrowScroll = async (direction: 'left' | 'right') => {
+    if (carouselRef.current && innerRef.current) {
+      const carouselWidth = carouselRef.current.offsetWidth;
+      const scrollAmount = carouselWidth * 0.8;
+      const currentX = innerRef.current.getBoundingClientRect().left - carouselRef.current.getBoundingClientRect().left;
+
+      let targetX = direction === 'left' ? currentX + scrollAmount : currentX - scrollAmount;
+
+      // Clamp targetX within constraints
+      targetX = Math.max(constraints.left, Math.min(constraints.right, targetX));
+
+      await controls.start({
+        x: targetX,
+        transition: { type: 'spring', stiffness: 300, damping: 30 }
+      });
+    }
+  };
 
   useEffect(() => {
     if (selectedPartner) {
@@ -35,75 +80,117 @@ const PartnersPage = () => {
         {/* Header Section */}
         <section id="alliances" className="relative overflow-hidden bg-on-background pb-16 pt-28 text-white sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-4xl"
-            >
-              <span className="label-md mb-6 block uppercase tracking-[0.4em] text-primary sm:mb-8">Strategic Alliances</span>
-              <h1 className="display-lg leading-[0.9] mb-12 uppercase italic">
-                Our Global <br /><span className="text-white/40 italic font-medium opacity-80">Network Architecture</span>
-              </h1>
-              <p className="max-w-2xl border-l border-primary/40 pl-4 text-base font-light leading-relaxed text-white/90 sm:pl-6 sm:text-lg md:pl-8 lg:text-xl">
-                Forging long-term high-precision partnerships with industry leaders to deliver integrated engineering solutions at a planetary scale.
-              </p>
-            </motion.div>
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-12">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="max-w-4xl"
+              >
+                <span className="label-md mb-6 block uppercase tracking-[0.4em] text-primary sm:mb-8">Strategic Alliances</span>
+                <h1 className="display-lg leading-[0.9] mb-8 uppercase italic sm:mb-12">
+                  Our Global <br /><span className="text-white/40 italic font-medium opacity-80">Network Architecture</span>
+                </h1>
+                <p className="max-w-2xl border-l border-primary/40 pl-4 text-base font-light leading-relaxed text-white/90 sm:pl-6 sm:text-lg md:pl-8 lg:text-xl">
+                  Forging long-term high-precision partnerships with industry leaders to deliver integrated engineering solutions at a planetary scale.
+                </p>
+              </motion.div>
+
+              {/* Slider Controls */}
+              <div className="flex items-center gap-4 mb-2">
+                <button
+                  onClick={() => handleArrowScroll('left')}
+                  className="group flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-primary hover:border-primary active:scale-95"
+                  aria-label="Previous partners"
+                >
+                  <ArrowLeft className="w-6 h-6 transition-transform group-hover:-translate-x-1" />
+                </button>
+                <button
+                  onClick={() => handleArrowScroll('right')}
+                  className="group flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-primary hover:border-primary active:scale-95"
+                  aria-label="Next partners"
+                >
+                  <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
+            </div>
           </div>
           <div className="absolute right-0 top-0 h-full w-1/2 opacity-10 pointer-events-none">
             <div className="industrial-gradient w-full h-full"></div>
           </div>
         </section>
 
-        {/* Partners Grid */}
-        <section id="hubs" className="bg-surface-container-high py-20 sm:py-24 md:py-32 xl:py-40">
+        {/* Partners Draggable Carousel */}
+        <section id="hubs" className="bg-surface-container-high py-20 sm:py-24 md:py-32 xl:py-40 overflow-hidden">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-              {partnerProfiles.map((partner, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05 }}
-                  onClick={() => setSelectedPartner(partner)}
-                  className="group flex min-h-[420px] cursor-pointer flex-col justify-between rounded-2xl border border-transparent bg-surface-container-high p-6 shadow-ambient transition-all duration-500 hover:border-primary/10 hover:bg-surface-container-lowest sm:min-h-[460px] sm:p-8 xl:min-h-[500px] xl:p-10"
-                >
-                  <div className="flex flex-1 flex-col">
-                    <div className="mb-8 flex h-40 w-full items-center justify-center overflow-hidden rounded-xl border border-white/5 p-3 transition-colors duration-500 group-hover:border-primary/10 sm:mb-10 sm:h-44 sm:p-4 xl:mb-12 xl:h-48 xl:p-5"
-                      style={{ background: 'linear-gradient(135deg, rgba(10,17,40,0.03) 0%, rgba(10,17,40,0.01) 100%)' }}>
-                      <img
-                        src={partner.logo}
-                        alt={partner.name}
-                        className="h-full w-full object-contain"
-                        style={{ maxHeight: '150px', maxWidth: '380px' }}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
+            <div
+              ref={carouselRef}
+              className="carousel-container cursor-grab active:cursor-grabbing no-scrollbar overflow-hidden"
+            >
+              <motion.div
+                ref={innerRef}
+                drag="x"
+                dragConstraints={constraints}
+                animate={controls}
+                onDragStart={() => setIsDragging(true)}
+                onDragEnd={() => {
+                  // Small delay to ensure click event doesn't fire after drag
+                  setTimeout(() => setIsDragging(false), 50);
+                }}
+                className="flex gap-6 sm:gap-8"
+              >
+                {partnerProfiles.map((partner, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.05 }}
+                    onClick={() => {
+                      if (!isDragging) setSelectedPartner(partner);
+                    }}
+                    className="group flex min-w-[300px] sm:min-w-[400px] md:min-w-[450px] flex-col justify-between rounded-2xl border border-transparent bg-surface-container-high p-6 shadow-ambient transition-all duration-500 hover:border-primary/10 hover:bg-surface-container-lowest sm:p-8 xl:p-10"
+                  >
                     <div className="flex flex-1 flex-col">
-                      <div className="space-y-3 sm:space-y-4">
-                        <span className="text-primary font-bold uppercase text-[9px] tracking-[0.4em] block">{partner.category}</span>
-                        <h3 className="text-2xl font-extrabold uppercase italic leading-none tracking-tighter text-on-background transition-colors duration-500 group-hover:text-primary sm:text-3xl">{partner.name}</h3>
-                        <p className="min-h-[72px] text-sm leading-6 text-on-surface-variant line-clamp-3 sm:min-h-[84px] sm:leading-7">
-                          {partner.description}
-                        </p>
+                      <div className="mb-8 flex h-40 w-full items-center justify-center overflow-hidden rounded-xl border border-white/5 p-3 transition-colors duration-500 group-hover:border-primary/10 sm:mb-10 sm:h-44 sm:p-4 xl:mb-12 xl:h-48 xl:p-5"
+                        style={{ background: 'linear-gradient(135deg, rgba(10,17,40,0.03) 0%, rgba(10,17,40,0.01) 100%)' }}>
+                        <img
+                          src={partner.logo}
+                          alt={partner.name}
+                          className="h-full w-full object-contain pointer-events-none select-none"
+                          style={{ maxHeight: '150px', maxWidth: '380px' }}
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </div>
+                      <div className="flex flex-1 flex-col">
+                        <div className="space-y-3 sm:space-y-4">
+                          <span className="text-primary font-bold uppercase text-[9px] tracking-[0.4em] block">{partner.category}</span>
+                          <h3 className="text-2xl font-extrabold uppercase italic leading-none tracking-tighter text-on-background transition-colors duration-500 group-hover:text-primary sm:text-3xl">{partner.name}</h3>
+                          <p className="min-h-[72px] text-sm leading-6 text-on-surface-variant line-clamp-3 sm:min-h-[84px] sm:leading-7">
+                            {partner.description}
+                          </p>
+                        </div>
 
-                      <div className="mt-6 border-t border-outline-variant/20 pt-5 sm:mt-8 sm:pt-6">
-                        <div className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/40 mb-2">Partnership Tenure</div>
-                        <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-on-surface">{partner.year}</div>
+                        <div className="mt-6 border-t border-outline-variant/20 pt-5 sm:mt-8 sm:pt-6">
+                          <div className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/40 mb-2">Partnership Tenure</div>
+                          <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-on-surface">{partner.year}</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mt-auto flex items-center justify-between border-t border-outline-variant/30 pt-6 sm:pt-8 xl:pt-10">
-                    <div className="flex flex-col">
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Project Hub</span>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface">{partner.location}</span>
+                    <div className="mt-auto flex items-center justify-between border-t border-outline-variant/30 pt-6 sm:pt-8 xl:pt-10">
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/40 mb-1">Project Hub</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface">{partner.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary overflow-hidden">
+                        <span className="text-[10px] font-bold uppercase tracking-widest translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 font-sans">View Profile</span>
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-500" />
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
           </div>
         </section>
