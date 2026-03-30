@@ -88,23 +88,7 @@
       height: auto
     }
 
-    .skip-link {
-      position: absolute;
-      left: 1rem;
-      top: 1rem;
-      z-index: 9999;
-      transform: translateY(-100%);
-      background-color: #0047AB;
-      padding: 0.75rem 1rem;
-      font-size: 0.875rem;
-      font-weight: 700;
-      color: #fff;
-      transition: transform .2s
-    }
 
-    .skip-link:focus {
-      transform: translateY(0)
-    }
 
     html {
       font-size: 16px;
@@ -199,8 +183,7 @@
 </head>
 
 <body>
-  <!-- Skip to main content link for accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+
 
   <form name="contact-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
     <input type="text" name="name" />

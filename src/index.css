@@ -124,10 +124,7 @@
   }
 }
 
-/* Accessibility: Skip link */
-.skip-link {
-  @apply absolute left-4 top-4 z-[9999] -translate-y-full bg-primary px-4 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0;
-}
+
 
 /* Prevent layout shifts */
 html {
