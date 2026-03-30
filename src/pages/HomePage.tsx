@@ -456,14 +456,17 @@ const HomePage: React.FC = () => {
                 <div
                   key={i}
                   className="flex h-20 w-44 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-2 shadow-ambient transition-all duration-500 hover:scale-105 sm:h-24 sm:w-52 sm:p-2 md:h-28 md:w-64 md:p-3"
+                  style={{ aspectRatio: '176/80' }}
                 >
                   <img
                     src={logo}
                     alt="Partner Brand"
                     className="max-h-full max-w-full object-contain"
+                    width={200}
+                    height={80}
                     loading="lazy"
                     decoding="async"
-                    style={{ display: 'block' }}
+                    style={{ display: 'block', aspectRatio: '200/80' }}
                   />
                 </div>
               ))}

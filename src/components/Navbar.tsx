@@ -50,7 +50,7 @@ const Navbar = () => {
 
           {/* Logo - Industrial Architect Specs */}
           <Link to="/" className="flex items-center gap-3 sm:gap-4 group relative shrink-0">
-            <div className="h-12 sm:h-14 md:h-16 lg:h-18 flex items-center justify-center relative z-10" style={{ minWidth: '320px' }}>
+            <div className="h-12 sm:h-14 md:h-16 lg:h-18 flex items-center justify-center relative z-10" style={{ minWidth: '320px', aspectRatio: '400/72' }}>
               <img
                 src={assetPaths.brand.logoMark}
                 alt="ADK Co., LTD"
@@ -58,7 +58,8 @@ const Navbar = () => {
                 width={400}
                 height={72}
                 decoding="async"
-                style={{ contain: 'layout' }}
+                fetchPriority="high"
+                style={{ aspectRatio: '400/72' }}
               />
             </div>
           </Link>
