@@ -111,7 +111,7 @@ const ServicesPage = () => {
                         asset={service.img}
                         alt={service.title}
                         sizes="(min-width: 1024px) 50vw, 100vw"
-                        pictureClassName="block w-full h-full"
+                        pictureClassName="contents"
                         imgClassName="w-full h-full object-cover"
                         loading="lazy"
                       />
@@ -209,8 +209,8 @@ const ServicesPage = () => {
                       asset={selectedService.img}
                       alt={selectedService.title}
                       sizes="(min-width: 1024px) 50vw, 100vw"
-                      pictureClassName="block w-full h-full"
-                      imgClassName="w-full h-full object-cover opacity-70 transition-transform duration-1000 group-hover:scale-105"
+                      pictureClassName="contents"
+                      imgClassName="w-full h-full object-cover opacity-70"
                       fetchPriority="high"
                     />
                   </div>
