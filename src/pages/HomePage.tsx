@@ -325,7 +325,7 @@ const HomePage: React.FC = () => {
                     <div className="space-y-5 sm:space-y-6">
                       <h3 className="text-2xl font-bold leading-tight tracking-tight text-on-surface sm:text-3xl md:text-4xl">
                         A Global Cornerstone in <br />
-                        <span className="text-primary italic">Marine Engineering</span>
+                        <span className="text-primary italic">Marine/Oil & Gas Engineering</span>
                       </h3>
 
                       <div className="grid grid-cols-1 gap-5 text-sm leading-relaxed text-on-surface-variant md:grid-cols-2 md:gap-8">
@@ -543,8 +543,7 @@ const HomePage: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/50 sm:mb-3">Email Us</div>
-                      <div className="text-base font-bold tracking-tight text-white sm:text-lg xl:text-xl">Phil : sales@prontech1.com</div>
-                      <div className="text-base font-bold tracking-tight text-white sm:text-lg xl:text-xl">KSA : sales@adknprotech.com</div>
+                      <div className="text-base font-bold tracking-tight text-white sm:text-lg xl:text-xl">sales@adknprotech.com</div>
                     </div>
                   </div>
 
@@ -554,8 +553,7 @@ const HomePage: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/50 sm:mb-3">Call Us</div>
-                      <div className="text-base font-bold tracking-tight text-white sm:text-lg xl:text-xl">Phil: +63 917 117 6242</div>
-                      <div className="text-base font-bold tracking-tight text-white sm:text-lg xl:text-xl">KSA: +966 62513827</div>
+                      <div className="text-base font-bold tracking-tight text-white sm:text-lg xl:text-xl">+966 62513827</div>
                     </div>
                   </div>
                 </div>

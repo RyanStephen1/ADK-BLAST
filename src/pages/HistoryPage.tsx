@@ -116,7 +116,7 @@ const HistoryPage = () => {
                   >
                     {historyMilestones.slice(currentIndex, currentIndex + itemsToShow).map((m, i) => (
                       <div key={i} className="flex flex-col h-full">
-                        <div className="mb-4 text-4xl font-black leading-none sm:mb-5 sm:text-5xl" style={{ color: '#0047AB' }}>{m.year}</div>
+                        <div className="mb-4 text-4xl font-black leading-none sm:mb-5 sm:text-5xl text-primary">{m.year}</div>
                         <div className="grow rounded-default border-l-2 border-primary bg-surface-container-lowest p-6 shadow-ambient sm:p-8 md:p-10">
                           <span className="label-sm text-primary block mb-4">{m.label}</span>
                           <h4 className="mb-6 text-xl font-bold uppercase leading-tight text-on-surface">

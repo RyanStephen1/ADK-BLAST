@@ -81,6 +81,7 @@ const CertificationsPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
     if (!containerRef.current) return;
 
     const delta = e.deltaY > 0 ? -0.2 : 0.2;

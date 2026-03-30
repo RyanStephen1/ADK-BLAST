@@ -99,7 +99,7 @@ export const serviceCategories: ServiceContent[] = [
     description: 'Comprehensive asset integrity and operational support services, including rope access, NDT, and industrial cleaning, ensuring long-term asset performance and safety.',
     features: [
       { name: 'Strategic Material Handling & Logistics', detail: 'We leverage advanced technical oversight and optimized workflows to streamline the movement and storage of industrial materials, ensuring your project remains cost-effective, secure, and on schedule.' },
-      { name: 'Critical Maintenance Shutdowns & Turnaround Services', detail: 'Maximize your plantâ€™s uptime and operational safety with our expert-led maintenance shutdowns, designed to deliver precision engineering and rapid turnarounds that minimize costly downtime.' },
+      { name: 'Critical Maintenance Shutdowns & Turnaround Services', detail: 'Maximize your plant\'s uptime and operational safety with our expert-led maintenance shutdowns, designed to deliver precision engineering and rapid turnarounds that minimize costly downtime.' },
       { name: 'Asset Optimization & Industrial Refurbishment', detail: 'Transform aging infrastructure into high-performance assets with our comprehensive refurbishment services, engineered to extend operational life and enhance efficiency.' },
     ],
   },
