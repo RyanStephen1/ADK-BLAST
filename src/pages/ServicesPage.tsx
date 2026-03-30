@@ -106,13 +106,13 @@ const ServicesPage = () => {
                     className="group relative w-full cursor-pointer lg:w-1/2"
                     onClick={() => handleOpenModal(service)}
                   >
-                    <div className="aspect-4/3 rounded-default overflow-hidden shadow-ambient bg-on-background">
+                    <div className="aspect-4/3 md:aspect-video lg:aspect-4/3 rounded-default overflow-hidden shadow-ambient bg-on-background relative">
                       <ResponsiveImage
                         asset={service.img}
                         alt={service.title}
                         sizes="(min-width: 1024px) 50vw, 100vw"
-                        pictureClassName="block h-full w-full"
-                        imgClassName="h-full w-full object-cover"
+                        pictureClassName="absolute inset-0 block h-full w-full"
+                        imgClassName="absolute inset-0 h-full w-full object-cover"
                         loading="lazy"
                       />
                     </div>
@@ -190,7 +190,7 @@ const ServicesPage = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.97, y: 24 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="relative flex max-h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-sm bg-surface shadow-ambient lg:flex-row"
+                className="relative flex min-h-[500px] max-h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-sm bg-surface shadow-ambient lg:min-h-[600px] xl:min-h-[700px] lg:flex-row"
               >
                 {/* Close Button */}
                 <button
@@ -208,7 +208,7 @@ const ServicesPage = () => {
                     alt={selectedService.title}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     pictureClassName="absolute inset-0 block h-full w-full"
-                    imgClassName="h-full w-full object-cover opacity-70 transition-transform duration-1000 group-hover:scale-105"
+                    imgClassName="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-1000 group-hover:scale-105"
                     fetchPriority="high"
                   />
                   {/* Architectural Overlays */}
@@ -306,7 +306,7 @@ const ServicesPage = () => {
           )}
         </AnimatePresence>
       </main>
-    </div>
+    </div >
   );
 };
 
