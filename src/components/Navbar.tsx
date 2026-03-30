@@ -14,7 +14,7 @@ const Navbar = () => {
   useEffect(() => { setIsOpen(false); setActiveDropdown(null); }, [location]);
 
   useEffect(() => {
-    const handleResize = () => { if (window.innerWidth >= 1024) setIsOpen(false); };
+    const handleResize = () => { if (window.innerWidth >= 1280) setIsOpen(false); };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -54,7 +54,7 @@ const Navbar = () => {
 
           {/* Logo - Industrial Architect Specs */}
           <Link to="/" className="flex items-center gap-3 sm:gap-4 group relative shrink-0">
-            <div className="h-10 sm:h-12 md:h-14 lg:h-16 flex items-center justify-center relative z-10" style={{ minWidth: 'clamp(140px, 30vw, 280px)', aspectRatio: '400/72' }}>
+            <div className="h-10 sm:h-12 md:h-14 lg:h-16 flex items-center justify-center relative z-10" style={{ minWidth: 'clamp(140px, 30vw, 240px)', aspectRatio: '400/72' }}>
               <img
                 src={assetPaths.brand.logoMark}
                 alt="ADK Co., LTD"
@@ -69,16 +69,16 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Nav - Editorial Authority */}
-          <div className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-10">
+          <div className="hidden xl:flex items-center gap-6 2xl:gap-10">
             {navLinks.map((link) => (
               <div
                 key={link.name}
                 className="relative"
                 onMouseEnter={() => {
-                  if (window.innerWidth >= 1024 && link.dropdown) setActiveDropdown(link.name);
+                  if (window.innerWidth >= 1280 && link.dropdown) setActiveDropdown(link.name);
                 }}
                 onMouseLeave={() => {
-                  if (window.innerWidth >= 1024 && link.dropdown) setActiveDropdown(null);
+                  if (window.innerWidth >= 1280 && link.dropdown) setActiveDropdown(null);
                 }}
               >
                 {link.dropdown ? (
@@ -88,7 +88,7 @@ const Navbar = () => {
                       onFocus={() => setActiveDropdown(link.name)}
                       aria-expanded={activeDropdown === link.name}
                       aria-haspopup="true"
-                      className={`flex items-center gap-2 xl:gap-3 label-md xl:label-lg transition-all duration-300 cursor-pointer whitespace-nowrap ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface hover:text-primary'
+                      className={`flex items-center gap-2 xl:gap-3 label-md 2xl:label-lg transition-all duration-300 cursor-pointer whitespace-nowrap ${activeDropdown === link.name ? 'text-primary' : 'text-on-surface hover:text-primary'
                         }`}
                     >
                       {link.name}
@@ -122,7 +122,7 @@ const Navbar = () => {
                 ) : (
                   <Link
                     to={link.path || '#'}
-                    className={`label-md xl:label-lg transition-all duration-300 relative group/link whitespace-nowrap ${location.pathname === link.path ? 'text-primary' : 'text-on-surface hover:text-primary'
+                    className={`label-md 2xl:label-lg transition-all duration-300 relative group/link whitespace-nowrap ${location.pathname === link.path ? 'text-primary' : 'text-on-surface hover:text-primary'
                       }`}
                   >
                     {link.name}
@@ -137,7 +137,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3 sm:gap-4 lg:gap-6">
             <Link
               to="/#contact"
-              className="bg-primary text-on-primary px-4 xl:px-8 py-2.5 sm:py-3.5 label-md xl:label-lg hover:bg-primary-container hover:-translate-y-1 transition-all shadow-lg hidden md:block rounded-sm whitespace-nowrap"
+              className="bg-primary text-on-primary px-4 sm:px-6 xl:px-8 py-2.5 sm:py-3 label-md xl:label-lg hover:bg-primary-container hover:-translate-y-1 transition-all shadow-lg hidden md:block rounded-sm whitespace-nowrap"
             >
               Consultation
             </Link>
@@ -145,7 +145,7 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 sm:p-2.5 transition-all duration-500 text-on-surface"
+              className="xl:hidden p-2 sm:p-2.5 transition-all duration-500 text-on-surface"
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -159,7 +159,7 @@ const Navbar = () => {
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation menu"
-        className={`lg:hidden bg-surface-container-lowest overflow-y-auto shadow-ambient transition-[max-height,opacity] duration-500 ease-out no-scrollbar ${isOpen ? 'max-h-[85vh] opacity-100 border-t border-black/5' : 'max-h-0 opacity-0 pointer-events-none'
+        className={`xl:hidden bg-surface-container-lowest overflow-y-auto shadow-ambient transition-[max-height,opacity] duration-500 ease-out no-scrollbar ${isOpen ? 'max-h-[85vh] opacity-100 border-t border-black/5' : 'max-h-0 opacity-0 pointer-events-none'
           }`}
       >
         <div className="px-4 sm:px-6 py-6 sm:py-8 space-y-3 sm:space-y-4">
