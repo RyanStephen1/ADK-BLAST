@@ -55,24 +55,17 @@ export default defineConfig({
             return
           }
 
-          if (id.includes('react-router-dom')) {
-            return 'router'
+          // Group core UI/Animation libraries to reduce the number of initial requests
+          if (
+            id.includes('framer-motion') ||
+            id.includes('lucide-react') ||
+            id.includes('react-helmet-async')
+          ) {
+            return 'vendor-ui'
           }
 
-          if (id.includes('framer-motion')) {
-            return 'motion'
-          }
-
-          if (id.includes('lucide-react')) {
-            return 'icons'
-          }
-
-          if (id.includes('react') || id.includes('scheduler')) {
-            return 'react-vendor'
-          }
-
-          if (id.includes('react-helmet-async')) {
-            return 'seo'
+          if (id.includes('react') || id.includes('scheduler') || id.includes('react-router')) {
+            return 'vendor-core'
           }
         },
       },

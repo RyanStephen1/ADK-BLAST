@@ -51,8 +51,7 @@ export const offices: OfficeLocation[] = [
   },
   {
     name: 'Bahrain Office',
-    address: 'Office 31 - Al Tajer Building 2582, 3rd Floor, Road 3647, Block 436, Seef Area',
-    details: 'Global Service Hub',
-    extra: 'EMAIL: sales@globalprotech.net',
+    address: 'Office 31, Al Tajer Building 2582, 3rd Floor, Road 3647, Block 436, Seef Area',
+    details: 'sales@globalprotech.net',
   },
 ];

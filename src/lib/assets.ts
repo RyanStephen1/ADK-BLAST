@@ -37,12 +37,12 @@ export const assetPaths = {
   },
   home: {
     heroBackgrounds: [
-      asset('home/hero/hero-1.webp'),
-      asset('home/hero/hero-2.webp'),
-      asset('home/hero/hero-3.webp'),
-      asset('home/hero/hero-4.webp'),
-      asset('home/hero/hero-5.webp'),
-      asset('home/hero/hero-6.webp'),
+      responsiveAsset('home/hero/hero-1.webp', 1346, 757, [480, 768]),
+      responsiveAsset('home/hero/hero-2.webp', 1346, 757, [480, 768]),
+      responsiveAsset('home/hero/hero-3.webp', 1346, 757, [480, 768]),
+      responsiveAsset('home/hero/hero-4.webp', 1346, 757, [480, 768]),
+      responsiveAsset('home/hero/hero-5.webp', 1346, 757, [480, 768]),
+      responsiveAsset('home/hero/hero-6.webp', 1346, 757, [480, 768]),
     ],
   },
   services: {

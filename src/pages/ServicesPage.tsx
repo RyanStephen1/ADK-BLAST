@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import { X, ChevronDown } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import ResponsiveImage from '../components/ResponsiveImage';
@@ -19,13 +19,16 @@ const ServicesPage = () => {
     const hash = location.hash;
 
     if (serviceId) {
-      setTimeout(() => {
-        const element = document.getElementById(serviceId);
-        if (element) {
-          const y = element.getBoundingClientRect().top + window.scrollY - 120;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
+      const scrollTimer = setTimeout(() => {
+        requestAnimationFrame(() => {
+          const element = document.getElementById(serviceId);
+          if (element) {
+            const y = element.getBoundingClientRect().top + window.scrollY - 120;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        });
       }, 100);
+      return () => clearTimeout(scrollTimer);
     } else if (hash) {
       const element = document.getElementById(hash.substring(1));
       if (element) {
@@ -70,19 +73,19 @@ const ServicesPage = () => {
         {/* Header Section */}
         <section className="relative overflow-hidden bg-on-background pb-16 pt-28 text-white sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="max-w-4xl"
             >
-              <span className="mb-6 block text-[10px] font-bold uppercase tracking-[0.4em] text-primary sm:mb-8">Technical Expertise</span>
+              <span className="mb-6 block text-[10px] font-bold uppercase tracking-[0.4em] text-accent sm:mb-8">Technical Expertise</span>
               <h1 className="mb-8 text-4xl font-extrabold uppercase italic leading-[0.9] tracking-tight sm:text-5xl md:mb-10 md:text-7xl xl:text-8xl">
                 Industrial <br /><span className="text-white/40">Capabilities.</span>
               </h1>
               <p className="max-w-2xl border-l border-white/40 pl-4 text-base font-light leading-relaxed text-white/90 sm:pl-6 sm:text-lg md:pl-8 lg:text-xl">
                 Providing specialized engineering solutions across the global maritime and industrial infrastructure landscapes since 1985.
               </p>
-            </motion.div>
+            </m.div>
           </div>
           <div className="absolute right-0 top-0 h-full w-1/2 opacity-10 pointer-events-none">
             <div className="industrial-gradient w-full h-full"></div>
@@ -99,27 +102,29 @@ const ServicesPage = () => {
                   id={service.id}
                   className={`flex scroll-mt-28 flex-col gap-10 sm:gap-12 lg:gap-16 xl:gap-20 ${idx % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-start lg:items-center`}
                 >
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
+                  <m.div
+                    initial={idx === 0 ? false : { opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="group relative w-full cursor-pointer lg:w-1/2"
+                    className="group relative w-full cursor-pointer lg:w-1/2 self-stretch"
                     onClick={() => handleOpenModal(service)}
                   >
-                    <div className="aspect-4/3 md:aspect-video lg:aspect-4/3 relative rounded-default overflow-hidden shadow-ambient bg-on-background">
+                    <div className="relative h-full min-h-[300px] sm:min-h-[400px] lg:min-h-0 rounded-default overflow-hidden shadow-ambient bg-on-background">
                       <ResponsiveImage
                         asset={service.img}
                         alt={service.title}
                         fill
                         sizes="(min-width: 1024px) 50vw, 100vw"
                         pictureClassName="absolute inset-0"
-                        loading="lazy"
+                        imgClassName="transition-transform duration-700 group-hover:scale-105"
+                        fetchPriority={idx === 0 ? 'high' : undefined}
+                        loading={idx === 0 ? 'eager' : 'lazy'}
                       />
                     </div>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div
-                    initial={{ opacity: 0, x: idx % 2 === 0 ? 20 : -20 }}
+                  <m.div
+                    initial={idx === 0 ? false : { opacity: 0, x: idx % 2 === 0 ? 20 : -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     className="w-full space-y-8 sm:space-y-10 lg:w-1/2 lg:space-y-12"
@@ -161,7 +166,7 @@ const ServicesPage = () => {
                         Get A Quote
                       </Link>
                     </div>
-                  </motion.div>
+                  </m.div>
                 </div>
               ))}
             </div>
@@ -171,13 +176,13 @@ const ServicesPage = () => {
         {/* Modal */}
         <AnimatePresence>
           {selectedService && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-100 flex items-center justify-center p-3 sm:p-4 lg:p-8"
             >
-              <motion.div
+              <m.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -185,7 +190,7 @@ const ServicesPage = () => {
                 onClick={handleCloseModal}
               />
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scale: 0.97, y: 24 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.97, y: 24 }}
@@ -236,7 +241,7 @@ const ServicesPage = () => {
                     {/* Overview */}
                     <div className="space-y-6">
                       <div className="flex items-center gap-4">
-                        <span className="label-md text-primary font-black">OVERVIEW</span>
+                        <h3 className="label-md text-primary font-black">OVERVIEW</h3>
                         <div className="h-px flex-1 bg-outline-variant/30"></div>
                       </div>
                       <p className="body-lg border-l-2 border-primary pl-5 font-light italic leading-relaxed text-on-surface sm:pl-6 md:pl-8">
@@ -247,7 +252,7 @@ const ServicesPage = () => {
                     {/* Specializations */}
                     <div className="space-y-8">
                       <div className="flex items-center gap-4">
-                        <span className="label-md text-primary font-black">SPECIALIZATIONS</span>
+                        <h3 className="label-md text-primary font-black">SPECIALIZATIONS</h3>
                         <div className="h-px flex-1 bg-outline-variant/30"></div>
                       </div>
 
@@ -273,7 +278,7 @@ const ServicesPage = () => {
 
                             <AnimatePresence>
                               {activeFeature?.name === feature.name && (
-                                <motion.div
+                                <m.div
                                   initial={{ height: 0, opacity: 0 }}
                                   animate={{ height: 'auto', opacity: 1 }}
                                   exit={{ height: 0, opacity: 0 }}
@@ -283,7 +288,7 @@ const ServicesPage = () => {
                                   <div className="ml-8 border-t border-outline-variant/10 px-5 pb-5 pt-4 text-sm font-medium italic leading-relaxed text-on-surface-variant sm:ml-10 sm:px-6 sm:pb-6 sm:pt-5 md:ml-12 md:px-8 md:pb-8 md:pt-6"
                                     dangerouslySetInnerHTML={{ __html: feature.detail }}
                                   />
-                                </motion.div>
+                                </m.div>
                               )}
                             </AnimatePresence>
                           </div>
@@ -305,8 +310,8 @@ const ServicesPage = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
       </main>

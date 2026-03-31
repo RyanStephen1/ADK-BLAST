@@ -20,11 +20,12 @@ const Footer = () => {
             <div className="flex items-center gap-4 sm:gap-6">
               <div
                 className="flex items-center justify-center brightness-0 invert opacity-80 w-48 sm:w-56 aspect-5/2"
+                style={{ aspectRatio: '5/2' }}
               >
                 <img
                   src={assetPaths.brand.logoFull}
                   alt="ADK Co., LTD"
-                  className="block w-full h-full object-contain"
+                  className="block w-full h-auto object-contain"
                   width={200}
                   height={80}
                   decoding="async"
@@ -32,13 +33,13 @@ const Footer = () => {
                 />
               </div>
             </div>
-            <p className="body-lg text-white/40 leading-relaxed max-w-md italic text-sm sm:text-base">
+            <p className="body-lg text-white/70 leading-relaxed max-w-md italic text-sm sm:text-base">
               Global industrial services provider specializing in high-precision engineering, infrastructure maintenance, and maritime operations across international jurisdictions.
             </p>
           </div>
 
           <div className="lg:col-span-3">
-            <h6 className="label-md text-white/40 mb-6 sm:mb-8">Quick Links</h6>
+            <h3 className="label-md text-white/70 mb-6 sm:mb-8">Quick Links</h3>
             <ul className="grid grid-cols-2 gap-x-6 gap-y-4 sm:gap-y-5 lg:grid-cols-1" role="list">
               {quickLinks.map((link) => (
                 <li key={link.to}>
@@ -54,18 +55,18 @@ const Footer = () => {
           </div>
 
           <div className="lg:col-span-5">
-            <h6 className="label-md text-white/40 mb-6 sm:mb-8 uppercase italic">Global Operations</h6>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+            <h3 className="label-md text-white/70 mb-6 sm:mb-8 uppercase italic">Global Operations</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {offices.map((office) => (
                 <div
                   key={office.name}
                   className="space-y-3 p-5 sm:p-6 hover:bg-white/5 transition-all duration-500 rounded-sm bg-white/2"
                 >
-                  <div className="label-sm text-primary">{office.name}</div>
+                  <div className="label-sm text-accent">{office.name}</div>
                   <address className="text-xs sm:text-sm text-white/80 font-medium leading-relaxed not-italic">
                     {office.address}
                   </address>
-                  <div className="text-[10px] sm:text-[11px] text-white/35 tracking-[0.16em] uppercase leading-relaxed">
+                  <div className="text-[10px] sm:text-[11px] text-white/70 tracking-[0.16em] uppercase leading-relaxed break-all sm:break-normal">
                     {office.details}
                     {office.extra ? (
                       <>
@@ -83,12 +84,12 @@ const Footer = () => {
 
       <div className="bg-black/30 py-5 sm:py-6 relative z-10">
         <div className="max-w-screen-2xl mx-auto px-5 sm:px-6 md:px-10 flex flex-col md:flex-row justify-between items-center md:items-start gap-4 sm:gap-5">
-          <p className="label-sm text-white/20 text-center md:text-left">
+          <p className="label-sm text-white/70 text-center md:text-left">
             Copyright {currentYear} ADK Co., LTD. All Rights Reserved.
           </p>
           <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 sm:gap-x-8" role="list" aria-label="Certifications">
-            <span className="label-sm text-white/30" role="listitem">ISO 9001:2015</span>
-            <span className="label-sm text-white/30" role="listitem">ISO 14001:2015</span>
+            <span className="label-sm text-white/70" role="listitem">ISO 9001:2015</span>
+            <span className="label-sm text-white/70" role="listitem">ISO 14001:2015</span>
           </div>
         </div>
       </div>

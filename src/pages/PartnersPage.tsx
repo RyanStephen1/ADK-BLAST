@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { motion as m, AnimatePresence, useAnimation } from 'framer-motion';
 import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { partnerProfiles } from '../content/partners';
@@ -20,12 +20,15 @@ const PartnersPage = () => {
   useEffect(() => {
     const updateConstraints = () => {
       if (carouselRef.current && innerRef.current) {
-        const carouselWidth = carouselRef.current.offsetWidth;
-        const innerWidth = innerRef.current.scrollWidth;
-        const constraintLeft = -(innerWidth - carouselWidth + 32); // 32px padding buffer
-        setConstraints({
-          left: Math.min(0, constraintLeft),
-          right: 0
+        requestAnimationFrame(() => {
+          if (!carouselRef.current || !innerRef.current) return;
+          const carouselWidth = carouselRef.current.offsetWidth;
+          const innerWidth = innerRef.current.scrollWidth;
+          const constraintLeft = -(innerWidth - carouselWidth + 32); // 32px padding buffer
+          setConstraints({
+            left: Math.min(0, constraintLeft),
+            right: 0
+          });
         });
       }
     };
@@ -39,20 +42,24 @@ const PartnersPage = () => {
     };
   }, [partnerProfiles]);
 
-  const handleArrowScroll = async (direction: 'left' | 'right') => {
+  const handleArrowScroll = (direction: 'left' | 'right') => {
     if (carouselRef.current && innerRef.current) {
-      const carouselWidth = carouselRef.current.offsetWidth;
-      const scrollAmount = carouselWidth * 0.8;
-      const currentX = innerRef.current.getBoundingClientRect().left - carouselRef.current.getBoundingClientRect().left;
+      requestAnimationFrame(async () => {
+        if (!carouselRef.current || !innerRef.current) return;
 
-      let targetX = direction === 'left' ? currentX + scrollAmount : currentX - scrollAmount;
+        const carouselWidth = carouselRef.current.offsetWidth;
+        const scrollAmount = carouselWidth * 0.8;
+        const currentX = innerRef.current.getBoundingClientRect().left - carouselRef.current.getBoundingClientRect().left;
 
-      // Clamp targetX within constraints
-      targetX = Math.max(constraints.left, Math.min(constraints.right, targetX));
+        let targetX = direction === 'left' ? currentX + scrollAmount : currentX - scrollAmount;
 
-      await controls.start({
-        x: targetX,
-        transition: { type: 'spring', stiffness: 300, damping: 30 }
+        // Clamp targetX within constraints
+        targetX = Math.max(constraints.left, Math.min(constraints.right, targetX));
+
+        await controls.start({
+          x: targetX,
+          transition: { type: 'spring', stiffness: 300, damping: 30 }
+        });
       });
     }
   };
@@ -81,19 +88,19 @@ const PartnersPage = () => {
         <section id="alliances" className="relative overflow-hidden bg-on-background pb-16 pt-28 text-white sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-12">
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-4xl"
               >
-                <span className="label-md mb-6 block uppercase tracking-[0.4em] text-primary sm:mb-8">Strategic Alliances</span>
+                <span className="label-md mb-6 block uppercase tracking-[0.4em] text-accent sm:mb-8">Strategic Alliances</span>
                 <h1 className="display-lg leading-[0.9] mb-8 uppercase italic sm:mb-12">
                   Our Global <br /><span className="text-white/40 italic font-medium opacity-80">Network Architecture</span>
                 </h1>
                 <p className="max-w-2xl border-l border-primary/40 pl-4 text-base font-light leading-relaxed text-white/90 sm:pl-6 sm:text-lg md:pl-8 lg:text-xl">
                   Forging long-term high-precision partnerships with industry leaders to deliver integrated engineering solutions at a planetary scale.
                 </p>
-              </motion.div>
+              </m.div>
 
               {/* Slider Controls */}
               <div className="flex items-center gap-4 mb-2">
@@ -126,7 +133,7 @@ const PartnersPage = () => {
               ref={carouselRef}
               className="carousel-container cursor-grab active:cursor-grabbing no-scrollbar overflow-hidden"
             >
-              <motion.div
+              <m.div
                 ref={innerRef}
                 drag="x"
                 dragConstraints={constraints}
@@ -139,7 +146,7 @@ const PartnersPage = () => {
                 className="flex gap-6 sm:gap-8"
               >
                 {partnerProfiles.map((partner, idx) => (
-                  <motion.div
+                  <m.div
                     key={idx}
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -166,7 +173,7 @@ const PartnersPage = () => {
                       <div className="flex flex-1 flex-col">
                         <div className="space-y-3 sm:space-y-4">
                           <span className="text-primary font-bold uppercase text-[9px] tracking-[0.4em] block">{partner.category}</span>
-                          <h3 className="text-2xl font-extrabold uppercase italic leading-none tracking-tighter text-on-background transition-colors duration-500 group-hover:text-primary sm:text-3xl">{partner.name}</h3>
+                          <h2 className="text-2xl font-extrabold uppercase italic leading-none tracking-tighter text-on-background transition-colors duration-500 group-hover:text-primary sm:text-3xl">{partner.name}</h2>
                           <p className="min-h-[72px] text-sm leading-6 text-on-surface-variant line-clamp-3 sm:min-h-[84px] sm:leading-7">
                             {partner.description}
                           </p>
@@ -189,9 +196,9 @@ const PartnersPage = () => {
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-500" />
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
-              </motion.div>
+              </m.div>
             </div>
           </div>
         </section>
@@ -199,13 +206,13 @@ const PartnersPage = () => {
         {/* Horizontal Inspection Modal */}
         <AnimatePresence>
           {selectedPartner && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-100 flex items-center justify-center p-3 sm:p-5 lg:p-10"
             >
-              <motion.div
+              <m.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -213,7 +220,7 @@ const PartnersPage = () => {
                 onClick={() => setSelectedPartner(null)}
               />
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scale: 0.98, y: 40 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98, y: 40 }}
@@ -251,7 +258,7 @@ const PartnersPage = () => {
                   <div className="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
                     <div className="space-y-8 sm:space-y-10">
                       <div>
-                        <h4 className="mb-5 text-[11px] font-bold uppercase tracking-[0.5em] text-primary sm:mb-8">Executive Summary</h4>
+                        <h3 className="mb-5 text-[11px] font-bold uppercase tracking-[0.5em] text-primary sm:mb-8">Executive Summary</h3>
                         <p className="text-base font-light leading-relaxed text-on-surface-variant sm:text-lg lg:text-xl">{selectedPartner.description}</p>
                       </div>
                       <div className="grid grid-cols-1 gap-6 border-t border-outline-variant/30 pt-6 sm:grid-cols-2 sm:gap-8 sm:pt-8 md:gap-10 md:pt-10">
@@ -267,7 +274,7 @@ const PartnersPage = () => {
                     </div>
 
                     <div className="space-y-6 rounded-2xl bg-surface-container-low p-5 sm:space-y-8 sm:p-6 md:p-8 lg:space-y-10 lg:p-10 xl:p-12">
-                      <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.5em] text-primary sm:mb-6">Verified Technical Scope</h4>
+                      <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.5em] text-primary sm:mb-6">Verified Technical Scope</h3>
                       <ul className="space-y-4 sm:space-y-5 md:space-y-6">
                         {selectedPartner.scope.map((item: string, i: number) => (
                           <li key={i} className="flex items-start gap-5 group">
@@ -279,8 +286,8 @@ const PartnersPage = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
       </main>

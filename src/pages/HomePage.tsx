@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Mail, Phone, Paperclip, Globe, Zap } from 'lucide-react';
 import SEO from '../components/SEO';
@@ -65,13 +65,16 @@ const HomePage: React.FC = () => {
     }
 
     if (location.hash === '#contact') {
-      setTimeout(() => {
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-          const y = contactSection.getBoundingClientRect().top + window.scrollY - 120;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
+      const scrollTimer = setTimeout(() => {
+        requestAnimationFrame(() => {
+          const contactSection = document.getElementById('contact');
+          if (contactSection) {
+            const y = contactSection.getBoundingClientRect().top + window.scrollY - 120;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        });
       }, 100);
+      return () => clearTimeout(scrollTimer);
     } else {
       window.scrollTo(0, 0);
     }
@@ -161,9 +164,11 @@ const HomePage: React.FC = () => {
         >
           <div className="absolute inset-0 z-0" style={{ contain: 'strict layout size' }}>
             <AnimatePresence initial={false}>
-              <motion.img
+              <m.img
                 key={bgIndex}
-                src={homeHeroBackgrounds[bgIndex]}
+                src={homeHeroBackgrounds[bgIndex].src}
+                srcSet={homeHeroBackgrounds[bgIndex].srcSet}
+                sizes="100vw"
                 alt=""
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -190,15 +195,15 @@ const HomePage: React.FC = () => {
           </div>
           <div className="relative z-10 mx-auto w-full max-w-screen-2xl px-4 pt-24 sm:px-6 sm:pt-28 md:px-8 lg:pt-20 xl:px-10">
             <div className="max-w-4xl">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
+              <m.div
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
                 className="mb-8 flex flex-wrap items-center gap-3 sm:mb-10 sm:gap-4"
               >
                 <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-widest text-white/30 sm:gap-4 sm:text-[10px]">
                   <AnimatePresence mode="wait">
-                    <motion.span
+                    <m.span
                       key={bgIndex}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -207,33 +212,33 @@ const HomePage: React.FC = () => {
                       className="text-primary font-bold"
                     >
                       {(bgIndex + 1).toString().padStart(2, '0')}
-                    </motion.span>
+                    </m.span>
                   </AnimatePresence>
                   <span>/</span>
                   <span>{homeHeroBackgrounds.length.toString().padStart(2, '0')}</span>
                 </div>
                 <span className="h-px w-10 bg-primary/30 sm:w-12" aria-hidden="true"></span>
                 <span className="label-md text-on-primary/60">Engineering Excellence since 1985</span>
-              </motion.div>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+              </m.div>
+              <m.h1
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
                 className="mb-8 max-w-3xl text-5xl font-black uppercase italic leading-[0.9] tracking-tight text-white sm:text-6xl md:mb-10 md:text-7xl xl:text-8xl"
               >
                 Industrial Precision. <br /><span className="text-white/40">Global Trust.</span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+              </m.h1>
+              <m.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
                 className="mb-10 max-w-2xl border-l border-white/40 pl-4 text-base font-light leading-relaxed text-white/90 sm:pl-6 sm:text-lg md:mb-14 md:pl-8 lg:text-xl"
               >
                 Defining the standard of reliability in maritime and heavy industrial sectors through architectural precision and engineering foresight.
-              </motion.p>
+              </m.p>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link to="/services" className="inline-flex min-h-12 items-center justify-center bg-primary px-6 py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-primary transition-all hover:bg-white hover:text-primary sm:px-10 md:px-12 md:py-5">Our Capabilities</Link>
-                <Link to="/history" className="inline-flex min-h-12 items-center justify-center bg-white/10 px-6 py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-white hover:text-primary sm:px-10 md:px-12 md:py-5">Our Journey</Link>
+                <Link to="/services" className="inline-flex min-h-12 items-center justify-center bg-primary px-6 py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-on-primary transition-all hover:bg-primary hover:text-white sm:px-10 md:px-12 md:py-5">Our Capabilities</Link>
+                <Link to="/history" className="inline-flex min-h-12 items-center justify-center bg-white/10 px-6 py-4 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-primary hover:text-white sm:px-10 md:px-12 md:py-5">Our Journey</Link>
               </div>
             </div>
           </div>
@@ -383,7 +388,7 @@ const HomePage: React.FC = () => {
                   <span className="label-md mb-6 block text-primary sm:mb-8">Technical Prowess</span>
                   <h2 className="text-4xl font-black uppercase italic leading-[0.9] tracking-tighter text-on-background sm:text-5xl lg:text-6xl xl:text-7xl">
                     Industrial Prowess <br />
-                    <span className="text-primary/25">at</span> Global Scale.
+                    <span className="text-primary/60">at</span> Global Scale.
                   </h2>
                 </div>
                 <p className="body-lg border-l-2 border-primary/20 pl-5 font-light leading-relaxed text-on-surface-variant sm:pl-6 md:pl-8">
@@ -396,20 +401,21 @@ const HomePage: React.FC = () => {
               {homeCompetencies.map((comp) => (
                 <article
                   key={comp.id}
-                  className="group relative min-h-[360px] overflow-hidden rounded-sm bg-on-background shadow-ambient transition-transform duration-500 hover:-translate-y-1 sm:min-h-[420px] lg:min-h-[460px]"
+                  className="group relative flex min-h-[460px] flex-col justify-end overflow-hidden rounded-sm bg-on-background shadow-ambient transition-transform duration-500 hover:-translate-y-1 sm:min-h-[400px] lg:min-h-[500px]"
                 >
                   <ResponsiveImage
                     asset={comp.img}
                     alt={comp.title}
+                    fill
                     sizes="(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"
-                    pictureClassName="absolute inset-0 block h-full w-full"
-                    imgClassName="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    pictureClassName="absolute inset-0"
+                    imgClassName="transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,12,27,0.22)_0%,rgba(7,12,27,0.72)_48%,rgba(7,12,27,0.94)_100%)]"></div>
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_58%)]"></div>
-                  <div className="absolute inset-y-0 left-4 w-px bg-white/10 sm:left-5"></div>
-                  <div className="absolute bottom-8 left-6 right-6 h-px bg-white/10 sm:bottom-10 sm:left-8 sm:right-8"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-on-background/90 via-on-background/20 to-on-background/5"></div>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0)_70%)]"></div>
+                  <div className="absolute inset-y-0 left-4 w-px bg-white/5 sm:left-5"></div>
+                  <div className="absolute bottom-8 left-6 right-6 h-px bg-white/5 sm:bottom-10 sm:left-8 sm:right-8"></div>
 
                   <div className="relative flex h-full flex-col justify-end p-6 sm:p-8 md:p-10">
                     <div className="mb-4 text-[10px] font-black tracking-[0.28em] text-primary sm:mb-6 sm:text-[11px]">
@@ -444,12 +450,12 @@ const HomePage: React.FC = () => {
         {/* Partner Logo Marquee */}
         <section className="relative overflow-hidden border-y border-white/5 bg-on-background py-16 sm:py-20 md:py-24">
           <div className="relative z-10 mx-auto mb-12 max-w-screen-2xl px-4 text-center sm:mb-16 sm:px-6 md:mb-20 md:px-8 xl:px-10">
-            <span className="label-md text-primary block mb-4">Strategic Alliances</span>
+            <span className="label-md text-accent block mb-4">Strategic Alliances</span>
             <h2 className="text-4xl font-black uppercase italic tracking-tighter text-white sm:text-5xl lg:text-6xl xl:text-7xl">Global Partners</h2>
           </div>
 
           <div className="relative flex overflow-hidden group">
-            <motion.div
+            <m.div
               className="flex gap-8 items-center whitespace-nowrap px-6"
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
@@ -460,18 +466,19 @@ const HomePage: React.FC = () => {
                   logo.includes('1590') ||
                   logo.includes('siemens') ||
                   logo.includes('hanjin') ||
+                  logo.includes('qatar') ||
                   logo.includes('imi');
 
                 return (
                   <div
                     key={i}
-                    className="flex h-20 w-44 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-2 shadow-ambient transition-all duration-500 hover:scale-105 sm:h-24 sm:w-52 sm:p-2 md:h-28 md:w-64 md:p-3"
-                    style={{ aspectRatio: '176/80' }}
+                    className="flex h-24 w-52 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-3 shadow-ambient transition-all duration-500 hover:scale-105 sm:h-28 sm:w-64 sm:p-4 md:h-32 md:w-72 md:p-5"
+                    style={{ aspectRatio: '200/96' }}
                   >
                     <img
                       src={logo}
                       alt="Partner Brand"
-                      className={`max-h-full max-w-full object-contain transition-transform duration-500 ${isBigLogo ? 'scale-135' : ''}`}
+                      className={`max-h-full max-w-full object-contain transition-transform duration-500 ${isBigLogo ? 'scale-150' : ''}`}
                       width={200}
                       height={80}
                       loading="lazy"
@@ -481,7 +488,7 @@ const HomePage: React.FC = () => {
                   </div>
                 );
               })}
-            </motion.div>
+            </m.div>
 
             {/* Gradient Edge Masks */}
             <div className="absolute bottom-0 left-0 top-0 z-20 w-32 bg-linear-to-r from-on-background via-on-background/80 to-transparent pointer-events-none sm:w-48 md:w-80" aria-hidden="true" />
@@ -509,7 +516,7 @@ const HomePage: React.FC = () => {
                 const ValueIcon = v.icon;
 
                 return (
-                  <motion.div
+                  <m.div
                     key={i}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -526,12 +533,12 @@ const HomePage: React.FC = () => {
                       <ValueIcon size={40} strokeWidth={1.5} />
                     </div>
 
-                    <h5 className="mb-4 text-lg font-black uppercase tracking-tight text-on-background group-hover:text-primary transition-colors sm:text-xl">{v.title}</h5>
+                    <h3 className="mb-4 text-lg font-black uppercase tracking-tight text-on-background group-hover:text-primary transition-colors sm:text-xl">{v.title}</h3>
                     <p className="text-on-surface-variant text-[11px] leading-relaxed font-medium uppercase tracking-[0.05em]">{v.desc}</p>
 
                     {/* Glowing Primary Footer Accent */}
                     <div className="absolute bottom-0 left-0 h-1 w-0 bg-primary shadow-[0_0_15px_rgba(0,71,171,0.3)] transition-all duration-700 group-hover:w-full"></div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </div>
@@ -588,7 +595,7 @@ const HomePage: React.FC = () => {
                       <Zap size={40} />
                     </div>
                     <div className="space-y-4">
-                      <h4 className="text-3xl font-black uppercase italic tracking-tighter">Inquiry Received</h4>
+                      <h3 className="text-3xl font-black uppercase italic tracking-tighter">Inquiry Received</h3>
                       <p className="body-md text-on-surface-variant max-w-xs mx-auto">Our experts will review your request and contact you as soon as possible.</p>
                     </div>
                     <button onClick={() => setFormStatus('idle')} className="text-primary font-bold uppercase tracking-widest text-xs border-b border-primary pb-1">Submit Another Inquiry</button>
@@ -625,10 +632,10 @@ const HomePage: React.FC = () => {
                     </div>
 
                     <div className="relative group">
-                      <label className="block label-md text-on-surface-variant mb-3 font-black tracking-widest">Primary Technical Service</label>
+                      <label htmlFor="service-select" className="block label-md text-on-surface-variant mb-3 font-black tracking-widest">Primary Technical Service</label>
                       <div className="relative">
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary scale-y-0 group-focus-within:scale-y-100 transition-transform duration-300"></div>
-                        <select name="service" value={contactForm.service} onChange={handleInputChange} className="w-full bg-surface-container-low border-none focus:ring-0 px-6 py-5 text-on-surface font-bold uppercase text-sm tracking-widest appearance-none cursor-pointer">
+                        <select id="service-select" name="service" value={contactForm.service} onChange={handleInputChange} className="w-full bg-surface-container-low border-none focus:ring-0 px-6 py-5 text-on-surface font-bold uppercase text-sm tracking-widest appearance-none cursor-pointer">
                           <option>Surface Preparation</option>
                           <option>Surface Treatment</option>
                           <option>Piping Systems</option>
@@ -642,10 +649,10 @@ const HomePage: React.FC = () => {
                     </div>
 
                     <div className="relative group">
-                      <label className="block label-md text-on-surface-variant mb-3 font-black tracking-widest">Specialization</label>
+                      <label htmlFor="specialization-select" className="block label-md text-on-surface-variant mb-3 font-black tracking-widest">Specialization</label>
                       <div className="relative">
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary scale-y-0 group-focus-within:scale-y-100 transition-transform duration-300"></div>
-                        <select name="specialization" value={contactForm.specialization} onChange={handleInputChange} className="w-full bg-surface-container-low border-none focus:ring-0 px-6 py-5 text-on-surface font-bold uppercase text-sm tracking-widest appearance-none cursor-pointer">
+                        <select id="specialization-select" name="specialization" value={contactForm.specialization} onChange={handleInputChange} className="w-full bg-surface-container-low border-none focus:ring-0 px-6 py-5 text-on-surface font-bold uppercase text-sm tracking-widest appearance-none cursor-pointer">
                           {specializationOptions.map((option) => (
                             <option key={option}>{option}</option>
                           ))}
@@ -672,8 +679,8 @@ const HomePage: React.FC = () => {
                           required
                           className="mt-1 h-4 w-4 rounded border-none bg-surface-container-low text-primary focus:ring-0 cursor-pointer"
                         />
-                        <label htmlFor="consent" className="text-[11px] leading-relaxed text-on-surface-variant/70 font-medium uppercase tracking-wider cursor-pointer">
-                          I hereby declare my consent for the processing of my personal data for the purpose of this technical inquiry, in accordance with the <Link to="/privacy-policy" className="text-primary hover:underline underline-offset-4">Privacy Policy</Link>.
+                        <label htmlFor="consent" className="text-[11px] leading-relaxed text-on-surface-variant font-medium uppercase tracking-wider cursor-pointer">
+                          I hereby declare my consent for the processing of my personal data for the purpose of this technical inquiry, in accordance with the <Link to="/privacy-policy" className="text-primary font-bold hover:underline underline-offset-4">Privacy Policy</Link>.
                         </label>
                       </div>
                     </div>
@@ -685,7 +692,7 @@ const HomePage: React.FC = () => {
                         </div>
                         <div className="space-y-1">
                           <span className="label-md block break-all text-on-surface">{contactForm.file ? contactForm.file.name : 'Attach Technical Files'}</span>
-                          <span className="text-xs uppercase tracking-tighter opacity-40 sm:text-[14px]">PDF / DWG / STEP MAX 10MB</span>
+                          <span className="text-xs uppercase tracking-tighter text-on-surface-variant sm:text-[14px]">PDF / DWG / STEP MAX 10MB</span>
                         </div>
                         <input ref={fileInputRef} type="file" name="attachment" className="hidden" onChange={handleFileChange} />
                       </label>
@@ -711,7 +718,7 @@ const HomePage: React.FC = () => {
           <div className="absolute -bottom-10 right-0 select-none text-[8rem] font-black leading-none text-white/5 sm:-bottom-16 sm:text-[12rem] lg:-right-20 lg:-bottom-20 lg:text-[20rem]">ADK</div>
         </section>
       </main>
-    </div>
+    </div >
   );
 };
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { historyEngagements, historyHighlightedCompanies, historyMilestones } from '../content/history';
@@ -58,19 +58,19 @@ const HistoryPage = () => {
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-on-background pb-16 pt-28 text-white sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="max-w-4xl"
             >
-              <span className="label-md mb-6 block text-primary sm:mb-8">Precision Since 1985</span>
+              <span className="label-md mb-6 block text-accent sm:mb-8">Precision Since 1985</span>
               <h1 className="display-lg leading-[0.9] mb-12 uppercase italic">
                 Our Legacy of <br /><span className="text-white/40 italic font-medium opacity-80">Precision Engineering</span>
               </h1>
               <p className="max-w-2xl border-l border-primary/40 pl-4 text-base font-light leading-relaxed text-white/90 sm:pl-6 sm:text-lg md:pl-8 lg:text-xl">
                 Over 40 years of industrial engineering excellence, delivering technical sophistication and unyielding reliability to the world's most demanding sectors.
               </p>
-            </motion.div>
+            </m.div>
           </div>
           <div className="absolute right-0 top-0 h-full w-1/2 opacity-10 pointer-events-none">
             <div className="industrial-gradient w-full h-full"></div>
@@ -106,7 +106,7 @@ const HistoryPage = () => {
             <div className="relative">
               <div className="flex gap-8 transition-all duration-700 ease-in-out">
                 <AnimatePresence mode="wait">
-                  <motion.div
+                  <m.div
                     key={currentIndex}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -119,7 +119,7 @@ const HistoryPage = () => {
                         <div className="mb-4 text-4xl font-black leading-none sm:mb-5 sm:text-5xl text-primary">{m.year}</div>
                         <div className="grow rounded-default border-l-2 border-primary bg-surface-container-lowest p-6 shadow-ambient sm:p-8 md:p-10">
                           <span className="label-sm text-primary block mb-4">{m.label}</span>
-                          <h4 className="mb-6 text-xl font-bold uppercase leading-tight text-on-surface">
+                          <h3 className="mb-6 text-xl font-bold uppercase leading-tight text-on-surface">
                             {splitHighlightedText(m.title, historyHighlightedCompanies).map((part, partIdx) => (
                               <span
                                 key={`${m.year}-${partIdx}`}
@@ -128,7 +128,7 @@ const HistoryPage = () => {
                                 {part.text}
                               </span>
                             ))}
-                          </h4>
+                          </h3>
                           <p className="text-sm text-on-surface-variant leading-relaxed font-medium">{m.desc}</p>
                         </div>
                       </div>
@@ -142,14 +142,14 @@ const HistoryPage = () => {
                         </div>
                       </div>
                     )}
-                  </motion.div>
+                  </m.div>
                 </AnimatePresence>
               </div>
             </div>
 
             <div className="mt-10 flex items-center gap-3 sm:mt-14 md:mt-16 lg:mt-20">
               <div className="h-1 bg-outline-variant grow relative overflow-hidden">
-                <motion.div
+                <m.div
                   className="absolute left-0 top-0 h-full bg-primary"
                   animate={{ width: `${((currentIndex + itemsToShow) / historyMilestones.length) * 100}%` }}
                 />
@@ -198,7 +198,7 @@ const HistoryPage = () => {
                           <engagement.icon className="w-5 h-5 text-primary" />
                         </div>
                         <div className="space-y-3">
-                          <h4 className="text-base font-black uppercase italic tracking-wide text-on-background">{engagement.name}</h4>
+                          <h3 className="text-base font-black uppercase italic tracking-wide text-on-background">{engagement.name}</h3>
                           <p className="text-sm leading-7 text-on-surface-variant">{engagement.desc}</p>
                         </div>
                       </div>
@@ -250,13 +250,13 @@ const HistoryPage = () => {
 
         <AnimatePresence>
           {selectedEngagement && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 lg:p-10"
             >
-              <motion.div
+              <m.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -264,7 +264,7 @@ const HistoryPage = () => {
                 onClick={() => setSelectedEngagement(null)}
               />
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scale: 0.98, y: 24 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98, y: 24 }}
@@ -304,8 +304,8 @@ const HistoryPage = () => {
                     <p className="text-sm font-bold uppercase tracking-[0.18em] text-on-background">{selectedEngagement.sector}</p>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
 

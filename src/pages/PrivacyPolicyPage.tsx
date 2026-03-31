@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion as m } from 'framer-motion';
 import SEO from '../components/SEO';
 import { privacyPolicySections } from '../content/legal';
 
@@ -20,7 +20,7 @@ const PrivacyPolicyPage: React.FC = () => {
         {/* Header Section */}
         <section className="relative overflow-hidden bg-on-background pb-16 pt-28 text-white sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="max-w-4xl"
@@ -32,7 +32,7 @@ const PrivacyPolicyPage: React.FC = () => {
               <p className="max-w-2xl border-l border-primary/40 pl-4 text-base font-light leading-relaxed text-white/90 sm:pl-6 sm:text-lg md:pl-8 lg:text-xl">
                 Outlining our commitment to data integrity and the rigorous protection of information shared during industrial engagements.
               </p>
-            </motion.div>
+            </m.div>
           </div>
           <div className="absolute right-0 top-0 h-full w-1/2 opacity-10 pointer-events-none">
             <div className="industrial-gradient w-full h-full"></div>
@@ -42,7 +42,7 @@ const PrivacyPolicyPage: React.FC = () => {
         {/* Content Section */}
         <section className="bg-white py-16 sm:py-20 md:py-24">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -58,7 +58,7 @@ const PrivacyPolicyPage: React.FC = () => {
               <p className="mt-4 text-sm font-medium text-on-surface-variant/80">
                 Last updated: March 28, 2026
               </p>
-            </motion.div>
+            </m.div>
 
             <div className="mb-10 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-6 sm:mb-12 sm:p-8">
               <div className="mb-4 text-sm font-black uppercase tracking-[0.22em] text-on-background">
@@ -80,7 +80,7 @@ const PrivacyPolicyPage: React.FC = () => {
 
             <div className="space-y-8">
               {privacyPolicySections.map((section, idx) => (
-                <motion.article
+                <m.article
                   key={section.id}
                   id={`privacy-${section.id}`}
                   initial={{ opacity: 0, y: 20 }}
@@ -105,7 +105,7 @@ const PrivacyPolicyPage: React.FC = () => {
                       </p>
                     ))}
                   </div>
-                </motion.article>
+                </m.article>
               ))}
 
               <div className="mt-2 rounded-xl bg-surface-container-low px-5 py-5 sm:px-6">

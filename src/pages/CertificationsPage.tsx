@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import { Shield, X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import SEO from '../components/SEO';
 
@@ -95,17 +95,20 @@ const CertificationsPage = () => {
       return;
     }
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left - rect.width / 2;
-    const mouseY = e.clientY - rect.top - rect.height / 2;
+    requestAnimationFrame(() => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left - rect.width / 2;
+      const mouseY = e.clientY - rect.top - rect.height / 2;
 
-    const zoomFactor = newScale / scale;
+      const zoomFactor = newScale / scale;
 
-    setOffset({
-      x: offset.x - (mouseX - offset.x) * (zoomFactor - 1),
-      y: offset.y - (mouseY - offset.y) * (zoomFactor - 1)
+      setOffset({
+        x: offset.x - (mouseX - offset.x) * (zoomFactor - 1),
+        y: offset.y - (mouseY - offset.y) * (zoomFactor - 1)
+      });
+      setScale(newScale);
     });
-    setScale(newScale);
   };
 
   return (
@@ -120,7 +123,7 @@ const CertificationsPage = () => {
         {/* Header Section */}
         <section className="relative overflow-hidden bg-on-background pb-16 pt-28 text-white sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-40">
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="max-w-4xl"
@@ -132,7 +135,7 @@ const CertificationsPage = () => {
               <p className="max-w-2xl border-l border-white/20 pl-4 text-base font-light leading-relaxed text-white/50 sm:pl-6 sm:text-lg md:pl-8 lg:text-xl">
                 Strict adherence to international ISO protocols and regional regulatory frameworks ensures mission-critical reliability.
               </p>
-            </motion.div>
+            </m.div>
           </div>
           <div className="absolute top-0 right-0 h-full w-1/3 opacity-5 pointer-events-none">
             <div className="industrial-gradient w-full h-full rotate-180"></div>
@@ -198,7 +201,7 @@ const CertificationsPage = () => {
       {/* Advanced Lightbox */}
       <AnimatePresence>
         {selectedIndex !== null && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -235,7 +238,7 @@ const CertificationsPage = () => {
                 </button>
 
                 <div className="w-full h-full flex items-center justify-center overflow-hidden pointer-events-none">
-                  <motion.img
+                  <m.img
                     key={selectedIndex}
                     src={documents[selectedIndex].img}
                     drag={scale > 1}
@@ -279,7 +282,7 @@ const CertificationsPage = () => {
             <div className="relative z-30 border-t border-white/5 bg-on-background/90 p-4 text-center backdrop-blur-xl sm:p-6 md:p-8">
               <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.4em]">{selectedIndex + 1} of {documents.length} verified credentials</p>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

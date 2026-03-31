@@ -20,7 +20,7 @@ const ScrollToTop = () => {
 };
 
 const RouteFallback = () => (
-  <div className="min-h-[40vh] bg-surface" aria-busy="true" />
+  <div className="min-h-screen bg-[#0A1128]" aria-busy="true" />
 );
 
 export const AppRoutes = () => (

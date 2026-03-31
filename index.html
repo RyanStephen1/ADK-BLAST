@@ -3,15 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
+  <!-- Preconnect to external resources immediately -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#0047AB" />
   <title>ADK Co., LTD | Industrial Precision & Engineering Excellence</title>
-
-  <!-- Preconnect to external resources -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <!-- Load Google Fonts asynchronously to prevent render-blocking -->
   <link rel="preload" as="style"
@@ -179,7 +179,10 @@
   </style>
 
   <!-- Preload critical assets -->
-  <link rel="preload" as="image" href="/assets/home/hero/hero-1.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="/assets/home/hero/hero-1.webp"
+    imagesrcset="/assets/home/hero/hero-1-480.webp 480w, /assets/home/hero/hero-1-768.webp 768w, /assets/home/hero/hero-1.webp 1346w"
+    imagesizes="100vw" fetchpriority="high" />
+  <script type="module" src="/src/main.tsx"></script>
 </head>
 
 <body>
@@ -195,8 +198,6 @@
     <input type="text" name="bot-field" />
   </form>
   <div id="root"></div>
-  <link rel="modulepreload" href="/src/main.tsx" />
-  <script type="module" src="/src/main.tsx"></script>
 </body>
 
 </html>
