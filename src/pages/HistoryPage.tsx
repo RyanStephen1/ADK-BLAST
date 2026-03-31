@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion as m, AnimatePresence } from 'framer-motion';
-import { X, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { X, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { historyEngagements, historyHighlightedCompanies, historyMilestones } from '../content/history';
 import { splitHighlightedText } from '../lib/text';
@@ -23,6 +24,21 @@ const HistoryPage = () => {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (window.location.hash !== '#active-engagements') return;
+
+    const scrollToSection = () => {
+      const target = document.getElementById('active-engagements');
+      if (!target) return;
+
+      const y = target.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    };
+
+    const timer = window.setTimeout(scrollToSection, 80);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -160,7 +176,7 @@ const HistoryPage = () => {
         </section>
 
         {/* Currently Working With */}
-        <section className="relative overflow-hidden bg-[#dbe7ff] py-20 sm:py-24 md:py-32 xl:py-40">
+        <section id="active-engagements" className="relative overflow-hidden bg-[#dbe7ff] py-20 sm:py-24 md:py-32 xl:py-40">
           <div
             className="absolute inset-0 opacity-[0.08] pointer-events-none"
             style={{
@@ -205,7 +221,7 @@ const HistoryPage = () => {
                         </div>
                         <div className="space-y-3">
                           <h3 className="text-base font-black uppercase italic tracking-wide text-on-background">{engagement.name}</h3>
-                          <p className="text-sm leading-7 text-on-surface-variant">{engagement.desc}</p>
+                          <p className="text-sm leading-7 text-on-surface-variant">{engagement.cardDescription}</p>
                         </div>
                       </div>
                     </button>
@@ -302,12 +318,25 @@ const HistoryPage = () => {
                 <div className="space-y-8 p-6 sm:p-8 md:p-10">
                   <div>
                     <div className="mb-3 text-[11px] font-black uppercase tracking-[0.3em] text-primary">Summary</div>
-                    <p className="text-base leading-8 text-on-surface-variant">{selectedEngagement.desc}</p>
+                    <p className="text-base leading-8 text-on-surface-variant">{selectedEngagement.summary}</p>
                   </div>
 
                   <div>
                     <div className="mb-3 text-[11px] font-black uppercase tracking-[0.3em] text-primary">Sector</div>
                     <p className="text-sm font-bold uppercase tracking-[0.18em] text-on-background">{selectedEngagement.sector}</p>
+                  </div>
+                </div>
+
+                <div className="border-t border-outline-variant/20 bg-[rgba(31,31,31,0.02)] px-6 py-5 sm:px-8 sm:py-6 md:px-10">
+                  <div className="flex justify-end">
+                    <Link
+                      to={selectedEngagement.galleryPath}
+                      onClick={() => setSelectedEngagement(null)}
+                      className="inline-flex items-center gap-2 rounded-xl bg-[#edf4ff] px-5 py-3 text-sm font-bold text-primary transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
+                    >
+                      <span>View project gallery</span>
+                      <ArrowUpRight size={16} />
+                    </Link>
                   </div>
                 </div>
               </m.div>

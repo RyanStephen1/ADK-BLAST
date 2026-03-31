@@ -40,7 +40,7 @@ const PartnersPage = () => {
       window.removeEventListener('resize', updateConstraints);
       clearTimeout(timer);
     };
-  }, [partnerProfiles]);
+  }, []);
 
   const handleArrowScroll = (direction: 'left' | 'right') => {
     if (carouselRef.current && innerRef.current) {

@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 const HomePage = lazy(() => import('../pages/HomePage'));
 const ServicesPage = lazy(() => import('../pages/ServicesPage'));
 const HistoryPage = lazy(() => import('../pages/HistoryPage'));
+const EngagementGalleryPage = lazy(() => import('../pages/EngagementGalleryPage'));
 const CertificationsPage = lazy(() => import('../pages/CertificationsPage'));
 const PartnersPage = lazy(() => import('../pages/PartnersPage'));
 const PrivacyPolicyPage = lazy(() => import('../pages/PrivacyPolicyPage'));
@@ -31,6 +32,7 @@ export const AppRoutes = () => (
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/history/gallery/:engagementId" element={<EngagementGalleryPage />} />
         <Route path="/certifications" element={<CertificationsPage />} />
         <Route path="/partners" element={<PartnersPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

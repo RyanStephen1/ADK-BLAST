@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import { Shield, X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const certificateAssetBase = `${import.meta.env.BASE_URL}assets/certifications`;
+const scannedDocumentStyle: CSSProperties & { WebkitOptimizeContrast?: 'initial' } = {
+  imageRendering: 'auto',
+  WebkitOptimizeContrast: 'initial',
+};
 
 const CertificationsPage = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -261,11 +266,7 @@ const CertificationsPage = () => {
                     className="max-h-full max-w-full object-contain shadow-2xl pointer-events-auto select-none"
                     alt="Document"
                     decoding="async"
-                    style={{
-                      imageRendering: 'auto',
-                      // @ts-ignore - webkit prefix for sharpening scanned docs
-                      WebkitOptimizeContrast: 'initial'
-                    } as any}
+                    style={scannedDocumentStyle}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 </div>

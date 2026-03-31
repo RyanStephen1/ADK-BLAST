@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-engagement-gallery-manifest.mjs",
+    "prebuild": "node scripts/generate-engagement-gallery-manifest.mjs",
+    "pretypecheck": "node scripts/generate-engagement-gallery-manifest.mjs",
+    "prelint": "node scripts/generate-engagement-gallery-manifest.mjs",
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc -b",

@@ -165,9 +165,9 @@ const HomePage: React.FC = () => {
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Submission error:', err);
-      setErrorMessage(err?.message || 'Transmission error. Please try again.');
+      setErrorMessage(err instanceof Error ? err.message : 'Transmission error. Please try again.');
       setFormStatus('error');
     }
   };

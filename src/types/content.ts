@@ -35,11 +35,16 @@ export interface HistoryMilestone {
 }
 
 export interface HistoryEngagement {
+  id: string;
   name: string;
   shortName: string;
-  desc: string;
+  cardDescription: string;
+  summary: string;
   logo: string;
   sector: string;
+  galleryPath: string;
+  galleryIntro: string;
+  galleryEmptyState: string;
 }
 
 export interface LegalSection {
