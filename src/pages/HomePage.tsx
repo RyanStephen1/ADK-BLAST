@@ -38,7 +38,6 @@ const HomePage: React.FC = () => {
 
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [fileError, setFileError] = useState('');
-  const netlifySuccessPath = `${import.meta.env.BASE_URL}?success=true#contact`;
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -116,7 +115,7 @@ const HomePage: React.FC = () => {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const response = await fetch(import.meta.env.BASE_URL || '/', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         body: formData,
       });
@@ -603,15 +602,11 @@ const HomePage: React.FC = () => {
                 ) : (
                   <form
                     name="contact-inquiry"
-                    action={netlifySuccessPath}
                     method="POST"
                     encType="multipart/form-data"
-                    data-netlify="true"
-                    netlify-honeypot="bot-field"
                     onSubmit={handleContactSubmit}
                     className="space-y-8 sm:space-y-10 md:space-y-12"
                   >
-                    <input type="hidden" name="form-name" value="contact-inquiry" />
                     <input type="text" name="bot-field" ref={honeypotRef} className="hidden" tabIndex={-1} autoComplete="off" />
 
                     <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
