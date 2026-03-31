@@ -8,18 +8,18 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
         const message = formData.get('message') as string || 'No message provided';
         const file = formData.get('attachment') as File | null;
 
-        // A valid RESEND_API_KEY must be stored in Cloudflare Pages Environment Variables
-        if (!env.RESEND_API_KEY) {
-            return new Response(JSON.stringify({ error: 'Server misconfiguration: missing RESEND_API_KEY' }), {
+        // A valid BREVO_API_KEY must be stored in Cloudflare Pages Environment Variables
+        if (!env.BREVO_API_KEY) {
+            return new Response(JSON.stringify({ error: 'Server misconfiguration: missing BREVO_API_KEY' }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' }
             });
         }
 
-        const attachments: { filename: string; content: string }[] = [];
+        const attachments: { name: string; content: string }[] = [];
 
         if (file && file.size > 0 && file.name) {
-            // Convert the uploaded file to a base64 string for Resend API
+            // Convert the uploaded file to a base64 string for Brevo API
             const arrayBuffer = await file.arrayBuffer();
             let binary = '';
             const bytes = new Uint8Array(arrayBuffer);
@@ -31,39 +31,37 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
             }
 
             attachments.push({
-                filename: file.name,
+                name: file.name,
                 content: btoa(binary),
             });
         }
 
-        const resendPayload = {
-            // NOTE: If your domain isn't fully verified in Resend yet, you must use 'onboarding@resend.dev' 
-            // as the 'from' address and you can only send to your own registered email address.
-            // Once verified, you can change this to something like 'ADK Portal <inquiries@adknprotech.com>'
-            from: 'ADK Portal <onboarding@resend.dev>',
-            to: ['sales@adknprotech.com'],
-            reply_to: email,
+        const brevoPayload = {
+            // NOTE: You must verify the sender email (or domain) in your Brevo dashboard.
+            sender: { name: 'ADK Portal', email: 'sales@adknprotech.com' },
+            to: [{ email: 'sales@adknprotech.com', name: 'ADK Sales' }],
+            replyTo: { email: email, name: name },
             subject: `New Technical Inquiry: ${service} - ${name}`,
-            html: `
-        <h2 style="color: #0047AB; font-family: sans-serif;">New Technical Inquiry from ADK Portal</h2>
-        <p style="font-family: sans-serif; font-size: 14px;"><strong>Name:</strong> ${name}</p>
-        <p style="font-family: sans-serif; font-size: 14px;"><strong>Email:</strong> ${email}</p>
-        <p style="font-family: sans-serif; font-size: 14px;"><strong>Primary Service:</strong> ${service}</p>
-        <p style="font-family: sans-serif; font-size: 14px;"><strong>Specialization:</strong> ${specialization}</p>
-        <br/>
-        <h3 style="font-family: sans-serif; font-size: 16px;">Project Overview:</h3>
-        <p style="font-family: sans-serif; font-size: 14px; background: #f4f6f8; padding: 15px; border-radius: 5px;">
-          ${message.replace(/\n/g, '<br/>')}
-        </p>
-      `,
-            attachments: attachments.length > 0 ? attachments : undefined,
+            htmlContent: `
+                <h2 style="color: #0047AB; font-family: sans-serif;">New Technical Inquiry from ADK Portal</h2>
+                <p style="font-family: sans-serif; font-size: 14px;"><strong>Name:</strong> ${name}</p>
+                <p style="font-family: sans-serif; font-size: 14px;"><strong>Email:</strong> ${email}</p>
+                <p style="font-family: sans-serif; font-size: 14px;"><strong>Primary Service:</strong> ${service}</p>
+                <p style="font-family: sans-serif; font-size: 14px;"><strong>Specialization:</strong> ${specialization}</p>
+                <br/>
+                <h3 style="font-family: sans-serif; font-size: 16px;">Project Overview:</h3>
+                <p style="font-family: sans-serif; font-size: 14px; background: #f4f6f8; padding: 15px; border-radius: 5px;">
+                  ${message.replace(/\n/g, '<br/>')}
+                </p>
+            `,
+            attachment: attachments.length > 0 ? attachments : undefined,
         };
 
         const autoReplyPayload = {
-            from: 'ADK Portal <onboarding@resend.dev>',
-            to: [email],
+            sender: { name: 'ADK Portal', email: 'sales@adknprotech.com' },
+            to: [{ email: email, name: name }],
             subject: 'Inquiry Received - ADK Industrial',
-            html: `
+            htmlContent: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
                     <h2 style="color: #0047AB;">Thank you for your inquiry, ${name}.</h2>
                     <p style="font-size: 15px; line-height: 1.6;">We have successfully received your technical request regarding <strong>${service}</strong>.</p>
@@ -78,19 +76,21 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
 
         // Dispatch both the internal notification and the customer auto-reply concurrently
         const [res, autoReplyRes] = await Promise.all([
-            fetch('https://api.resend.com/emails', {
+            fetch('https://api.brevo.com/v3/smtp/email', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                    'api-key': env.BREVO_API_KEY,
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(resendPayload),
+                body: JSON.stringify(brevoPayload),
             }),
-            fetch('https://api.resend.com/emails', {
+            fetch('https://api.brevo.com/v3/smtp/email', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                    'api-key': env.BREVO_API_KEY,
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(autoReplyPayload),
             })
@@ -98,17 +98,17 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
 
         if (!res.ok) {
             const errorText = await res.text();
-            console.error('Resend API Error (Primary):', errorText);
-            return new Response(JSON.stringify({ error: 'Failed to dispatch email via Resend' }), {
+            console.error('Brevo API Error (Primary):', errorText);
+            return new Response(JSON.stringify({ error: 'Failed to dispatch email via Brevo' }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' }
             });
         }
 
         if (!autoReplyRes.ok) {
-            // Log the auto-reply error but do not fail the request overall, as domain verification might be pending
+            // Log the auto-reply error but do not fail the request overall
             const autoErrorText = await autoReplyRes.text();
-            console.warn('Resend API Warning (Auto-Reply):', autoErrorText);
+            console.warn('Brevo API Warning (Auto-Reply):', autoErrorText);
         }
 
         return new Response(JSON.stringify({ success: true }), {
