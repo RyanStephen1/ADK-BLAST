@@ -25,8 +25,8 @@ export const serviceCategories: ServiceContent[] = [
     features: [
       { name: 'Industrial Coating Solutions', detail: 'Application of high-performance epoxy and polyurethane coatings for tanks, vessels, and refinery infrastructure.' },
       { name: 'Thermal Spray Aluminum (TSA)', detail: 'Specialized arc-wire spray systems for long-term corrosion protection in high-temperature and offshore environments.' },
-      { name: 'Intumescent Fireproofing', detail: 'Advanced passive fire protection that expands into insulating char to maintain structural integrity during thermal events.' },
-      { name: 'Polyurea Waterproofing', detail: 'Ultra-fast curing elastomeric membranes for robust bridge, roof, and containment secondary lining.' },
+      { name: 'Fireproofing', detail: 'Advanced passive fire protection that expands into insulating char to maintain structural integrity during thermal events.' },
+      { name: 'Waterproofing', detail: 'Ultra-fast curing elastomeric membranes for robust bridge, roof, and containment secondary lining.' },
     ],
   },
   {
