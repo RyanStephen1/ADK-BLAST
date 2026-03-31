@@ -360,7 +360,7 @@ const HomePage: React.FC = () => {
                 </div>
 
                 {/* Level 3: Floating Glass Stat (Glassmorphism Rule) */}
-                <div className="glass-nav absolute -bottom-6 right-4 hidden max-w-[220px] rounded-md border border-white/20 p-6 shadow-2xl md:block lg:right-8 xl:right-12 xl:max-w-[240px] xl:p-8">
+                <div className="glass-nav absolute hidden rounded-md border border-white/20 p-6 shadow-2xl md:block md:-bottom-6 md:right-4 lg:-bottom-12 lg:-right-4 xl:-bottom-6 xl:right-12 max-w-[220px] xl:max-w-[240px] xl:p-8">
                   <div className="space-y-4">
                     <div className="w-10 h-1 bg-accent"></div>
                     <div className="text-4xl font-black text-on-background tracking-tighter italic">40+</div>
