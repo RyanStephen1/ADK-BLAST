@@ -21,13 +21,12 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
         if (file && file.size > 0 && file.name) {
             // Convert the uploaded file to a base64 string for Brevo API
             const arrayBuffer = await file.arrayBuffer();
-            let binary = '';
             const bytes = new Uint8Array(arrayBuffer);
-            const len = bytes.byteLength;
+            let binary = '';
 
-            // Process in chunks to avoid "Maximum call stack size exceeded" errors with large files
-            for (let i = 0; i < len; i += 32768) {
-                binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + 32768)));
+            // Process in chunks to avoid stack overflow with large files
+            for (let i = 0; i < bytes.byteLength; i += 8192) {
+                binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + 8192)));
             }
 
             attachments.push({
@@ -37,7 +36,6 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
         }
 
         const brevoPayload = {
-            // NOTE: You must verify the sender email (or domain) in your Brevo dashboard.
             sender: { name: 'ADK Portal', email: 'sales@adknprotech.com' },
             to: [{ email: 'sales@adknprotech.com', name: 'ADK Sales' }],
             replyTo: { email: email, name: name },
@@ -99,14 +97,13 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
         if (!res.ok) {
             const errorText = await res.text();
             console.error('Brevo API Error (Primary):', errorText);
-            return new Response(JSON.stringify({ error: 'Failed to dispatch email via Brevo' }), {
+            return new Response(JSON.stringify({ error: 'Failed to dispatch email via Brevo', detail: errorText }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' }
             });
         }
 
         if (!autoReplyRes.ok) {
-            // Log the auto-reply error but do not fail the request overall
             const autoErrorText = await autoReplyRes.text();
             console.warn('Brevo API Warning (Auto-Reply):', autoErrorText);
         }
@@ -118,7 +115,7 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
 
     } catch (error: any) {
         console.error('Cloudflare Function Endpoint Error:', error);
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+        return new Response(JSON.stringify({ error: 'Internal Server Error', message: error.message }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
         });

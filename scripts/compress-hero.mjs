@@ -17,14 +17,13 @@ async function processImages() {
         console.log(`Processing ${file}...`);
 
         // Original image: just compress it
-        // Wait, if it's already webp, just re-encoding it at a lower quality 
-        // will save the most size. Let's use quality 80.
-        const tempOriginal = inputPath + '.tmp';
-        await sharp(inputPath)
+        // Use a buffer for both input and output to avoid EPERM rename issues on Windows
+        const inputBuffer = fs.readFileSync(inputPath);
+        const outputBuffer = await sharp(inputBuffer)
             .webp({ quality: 80, effort: 6 })
-            .toFile(tempOriginal);
+            .toBuffer();
 
-        fs.renameSync(tempOriginal, inputPath);
+        fs.writeFileSync(inputPath, outputBuffer);
         console.log(`  Compressed original to quality 80`);
 
         const parsed = path.parse(file);
