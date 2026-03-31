@@ -181,7 +181,7 @@ const HistoryPage = () => {
                   <span className="text-primary/45">Engagements.</span>
                 </h2>
                 <p className="body-lg max-w-xl border-l-2 border-primary/30 pl-5 font-light leading-relaxed text-on-surface-variant sm:pl-8">
-                  Our legacy is reinforced through active technical engagements with tier-1 industrial partners, combining cross-border compliance, marine precision, and operational reliability.
+                  We are actively executing engineering and technical projects in collaboration with tier-1 global partners, delivering high standards in marine infrastructure, energy systems, and industrial operations.
                 </p>
 
                 <div className="space-y-4 sm:space-y-5">
@@ -194,8 +194,14 @@ const HistoryPage = () => {
                     >
                       <div className="absolute left-0 top-0 h-full w-1.5 bg-primary/80"></div>
                       <div className="flex items-center gap-4 sm:gap-5 md:gap-6">
-                        <div className="shrink-0 rounded-sm bg-primary/12 p-3 text-primary sm:p-4">
-                          <engagement.icon className="w-5 h-5 text-primary" />
+                        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-sm bg-white/80 p-2 shadow-[inset_0_0_0_1px_rgba(66,112,185,0.08)] sm:h-20 sm:w-20 sm:p-3 md:h-24 md:w-24 md:p-4">
+                          <img
+                            src={engagement.logo}
+                            alt={engagement.shortName}
+                            className="h-full w-full object-contain"
+                            loading="lazy"
+                            decoding="async"
+                          />
                         </div>
                         <div className="space-y-3">
                           <h3 className="text-base font-black uppercase italic tracking-wide text-on-background">{engagement.name}</h3>

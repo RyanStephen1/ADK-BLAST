@@ -35,7 +35,6 @@ export interface HistoryMilestone {
 }
 
 export interface HistoryEngagement {
-  icon: LucideIcon;
   name: string;
   shortName: string;
   desc: string;

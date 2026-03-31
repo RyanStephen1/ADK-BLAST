@@ -34,7 +34,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="body-lg text-white/70 leading-relaxed max-w-md italic text-sm sm:text-base">
-              Global industrial services provider specializing in high-precision engineering, infrastructure maintenance, and maritime operations across international jurisdictions.
+              A Global industrial services provider specializing in high-precision engineering, infrastructure maintenance, and maritime operations across international jurisdictions.
             </p>
           </div>
 
