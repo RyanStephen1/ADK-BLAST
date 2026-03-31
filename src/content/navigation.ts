@@ -34,24 +34,24 @@ export const offices: OfficeLocation[] = [
   {
     name: 'Korea Office',
     address: '19, Beobwonnam-ro 15beon-gil, Yeonje-gu, Busan, S. Korea',
-    details: 'TEL: +82-10-7216-6776',
-    extra: 'EMAIL: klare@adknprotech.com',
+    details: 'Tel: +82-10-7216-6776',
+    extra: 'Email: klare@adknprotech.com',
   },
   {
     name: 'Saudi Arabia Office',
     address: '2837, B13, Tebah District, Al Jubail, Saudi Arabia',
-    details: 'TEL: +966-50-285-4880',
-    extra: 'EMAIL: sales@adknprotech.com',
+    details: 'Tel: +966-50-285-4880',
+    extra: 'Email: sales@adknprotech.com',
   },
   {
     name: 'Philippine Office',
     address: 'Sitio Bulihan, Tabangao Ambulong, Batangas City, Philippines',
-    details: 'TEL: +63-917-117-6242',
-    extra: 'EMAIL: sales@prontech1.com',
+    details: 'Tel: +63-917-117-6242',
+    extra: 'Email: sales@prontech1.com',
   },
   {
     name: 'Bahrain Office',
     address: 'Office 31, Al Tajer Building 2582, 3rd Floor, Road 3647, Block 436, Seef Area',
-    details: 'sales@globalprotech.net',
+    details: 'Email: sales@globalprotech.net',
   },
 ];

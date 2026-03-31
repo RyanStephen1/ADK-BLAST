@@ -109,8 +109,9 @@ const Navbar = () => {
                                 key={item.name}
                                 to={item.path}
                                 role="menuitem"
-                                className="block px-8 py-4 label-md text-on-surface/60 hover:text-primary hover:bg-surface-container-low transition-all duration-300 border-b border-outline-variant/5 last:border-0"
+                                className="flex items-center gap-3 px-8 py-4 label-md text-on-surface/60 hover:text-primary hover:bg-surface-container-low transition-all duration-300 border-b border-outline-variant/5 last:border-0"
                               >
+                                <span className="h-1.5 w-1.5 rounded-full bg-primary/40" aria-hidden="true"></span>
                                 {item.name}
                               </Link>
                             ))}
@@ -206,8 +207,9 @@ const Navbar = () => {
                     <Link
                       key={item.name}
                       to={item.path}
-                      className="mobile-nav-link block py-3 label-md text-on-surface/50 hover:text-primary transition-colors"
+                      className="mobile-nav-link flex items-center gap-3 py-3 label-md text-on-surface/50 hover:text-primary transition-colors"
                     >
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary/40" aria-hidden="true"></span>
                       {item.name}
                     </Link>
                   ))}

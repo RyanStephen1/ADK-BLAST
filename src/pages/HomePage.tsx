@@ -38,6 +38,7 @@ const HomePage: React.FC = () => {
 
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [fileError, setFileError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -82,6 +83,12 @@ const HomePage: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    if (formStatus === 'error') {
+      setFormStatus('idle');
+    }
+    if (errorMessage) {
+      setErrorMessage('');
+    }
     setContactForm(prev => ({
       ...prev,
       [name]: val,
@@ -91,6 +98,12 @@ const HomePage: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
+    if (formStatus === 'error') {
+      setFormStatus('idle');
+    }
+    if (errorMessage) {
+      setErrorMessage('');
+    }
     if (selectedFile) {
       if (selectedFile.size > 10 * 1024 * 1024) {
         setFileError('File size must be under 10MB');
@@ -112,6 +125,7 @@ const HomePage: React.FC = () => {
     }
 
     setFormStatus('loading');
+    setErrorMessage('');
 
     try {
       const formData = new FormData(e.currentTarget);
@@ -121,10 +135,22 @@ const HomePage: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Submission failed');
+        let message = 'Submission failed';
+
+        try {
+          const payload = await response.json();
+          if (typeof payload?.error === 'string') {
+            message = payload.error;
+          }
+        } catch {
+          // Ignore invalid JSON and fall back to the generic message.
+        }
+
+        throw new Error(message);
       }
 
       setFormStatus('success');
+      setErrorMessage('');
       setContactForm({
         name: '',
         email: '',
@@ -141,9 +167,8 @@ const HomePage: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Submission error:', err);
+      setErrorMessage(err?.message || 'Transmission error. Please try again.');
       setFormStatus('error');
-      // If the response has JSON error detail, it will be caught in the try block usually.
-      // But we can also set a message state if we want.
     }
   };
 
@@ -612,7 +637,7 @@ const HomePage: React.FC = () => {
                   >
                     {formStatus === 'error' && (
                       <div className="bg-red-50 text-red-700 p-4 text-xs font-bold uppercase tracking-widest border-l-2 border-red-500">
-                        Transmission Error. Please verify your connection or contact us directly at sales@adknprotech.com.
+                        {errorMessage || 'Transmission Error. Please verify your connection or contact us directly at sales@adknprotech.com.'}
                       </div>
                     )}
                     <input type="text" name="bot-field" ref={honeypotRef} className="hidden" tabIndex={-1} autoComplete="off" />

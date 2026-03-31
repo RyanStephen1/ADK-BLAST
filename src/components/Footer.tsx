@@ -66,7 +66,7 @@ const Footer = () => {
                   <address className="text-xs sm:text-sm text-white/80 font-medium leading-relaxed not-italic">
                     {office.address}
                   </address>
-                  <div className="text-[10px] sm:text-[11px] text-white/70 tracking-[0.16em] uppercase leading-relaxed break-all sm:break-normal">
+                  <div className="text-[10px] sm:text-[11px] text-white/70 tracking-[0.16em] leading-relaxed break-all sm:break-normal">
                     {office.details}
                     {office.extra ? (
                       <>

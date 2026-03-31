@@ -25,7 +25,7 @@ export const serviceCategories: ServiceContent[] = [
     features: [
       { name: 'Industrial Coating Solutions', detail: 'Application of high-performance epoxy and polyurethane coatings for tanks, vessels, and refinery infrastructure.' },
       { name: 'Thermal Spray Aluminum (TSA)', detail: 'Specialized arc-wire spray systems for long-term corrosion protection in high-temperature and offshore environments.' },
-      { name: 'Fireproofing', detail: 'Advanced passive fire protection that expands into insulating char to maintain structural integrity during thermal events.' },
+      { name: 'Fireproofing', detail: 'We provide expert fireproofing solutions, specializing in both durable cementitious coatings for high-performance insulation and sleek intumescent paints that offer superior protection without compromising your building’s design. Our team ensures your structure meets the highest safety standards by applying the most effective thermal barriers tailored to your specific project needs.' },
       { name: 'Waterproofing', detail: 'Comprehensive solutions featuring versatile liquid-applied membranes (Polyurethane, Acrylic) for complex shapes, uniform sheet membranes (Bituminous, EPDM) for large flat surfaces, and specialized below-grade treatments (Bentonite, Crystalline) to protect foundations.' },
     ],
   },
