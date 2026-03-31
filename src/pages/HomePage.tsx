@@ -139,8 +139,11 @@ const HomePage: React.FC = () => {
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
-    } catch {
+    } catch (err: any) {
+      console.error('Submission error:', err);
       setFormStatus('error');
+      // If the response has JSON error detail, it will be caught in the try block usually.
+      // But we can also set a message state if we want.
     }
   };
 
@@ -607,6 +610,11 @@ const HomePage: React.FC = () => {
                     onSubmit={handleContactSubmit}
                     className="space-y-8 sm:space-y-10 md:space-y-12"
                   >
+                    {formStatus === 'error' && (
+                      <div className="bg-red-50 text-red-700 p-4 text-xs font-bold uppercase tracking-widest border-l-2 border-red-500">
+                        Transmission Error. Please verify your connection or contact us directly at sales@adknprotech.com.
+                      </div>
+                    )}
                     <input type="text" name="bot-field" ref={honeypotRef} className="hidden" tabIndex={-1} autoComplete="off" />
 
                     <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">

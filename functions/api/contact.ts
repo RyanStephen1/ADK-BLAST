@@ -19,20 +19,34 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
         const attachments: { name: string; content: string }[] = [];
 
         if (file && file.size > 0 && file.name) {
-            // Convert the uploaded file to a base64 string for Brevo API
-            const arrayBuffer = await file.arrayBuffer();
-            const bytes = new Uint8Array(arrayBuffer);
-            let binary = '';
-
-            // Process in chunks to avoid stack overflow with large files
-            for (let i = 0; i < bytes.byteLength; i += 8192) {
-                binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + 8192)));
+            // Brevo API has a size limit (approx 10MB total)
+            if (file.size > 10 * 1024 * 1024) {
+                return new Response(JSON.stringify({ error: 'File too large. Max 10MB.' }), {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' }
+                });
             }
 
-            attachments.push({
-                name: file.name,
-                content: btoa(binary),
-            });
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const bytes = new Uint8Array(arrayBuffer);
+                let binary = '';
+                const chunkSize = 8192;
+                for (let i = 0; i < bytes.byteLength; i += chunkSize) {
+                    binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + chunkSize)));
+                }
+
+                attachments.push({
+                    name: file.name,
+                    content: btoa(binary),
+                });
+            } catch (fileError: any) {
+                console.error('File parsing error:', fileError);
+                return new Response(JSON.stringify({ error: 'Attachment processing failed', detail: fileError.message }), {
+                    status: 500,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
         }
 
         const brevoPayload = {
