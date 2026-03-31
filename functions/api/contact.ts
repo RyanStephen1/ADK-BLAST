@@ -59,22 +59,56 @@ export async function onRequestPost({ request, env }: { request: Request, env: a
             attachments: attachments.length > 0 ? attachments : undefined,
         };
 
-        const res = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(resendPayload),
-        });
+        const autoReplyPayload = {
+            from: 'ADK Portal <onboarding@resend.dev>',
+            to: [email],
+            subject: 'Inquiry Received - ADK Industrial',
+            html: `
+                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+                    <h2 style="color: #0047AB;">Thank you for your inquiry, ${name}.</h2>
+                    <p style="font-size: 15px; line-height: 1.6;">We have successfully received your technical request regarding <strong>${service}</strong>.</p>
+                    <p style="font-size: 15px; line-height: 1.6;">Our engineering experts are currently reviewing your project details. We will reach out to you shortly to discuss the next steps and provide a comprehensive consultation.</p>
+                    <br/>
+                    <p style="font-size: 15px;">Best regards,</p>
+                    <p style="font-size: 15px; font-weight: bold; color: #0047AB;">The ADK Team<br/>
+                    <span style="font-size: 12px; font-weight: normal; color: #666;">Industrial Precision. Global Trust.</span></p>
+                </div>
+            `,
+        };
+
+        // Dispatch both the internal notification and the customer auto-reply concurrently
+        const [res, autoReplyRes] = await Promise.all([
+            fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(resendPayload),
+            }),
+            fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(autoReplyPayload),
+            })
+        ]);
 
         if (!res.ok) {
             const errorText = await res.text();
-            console.error('Resend API Error:', errorText);
+            console.error('Resend API Error (Primary):', errorText);
             return new Response(JSON.stringify({ error: 'Failed to dispatch email via Resend' }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' }
             });
+        }
+
+        if (!autoReplyRes.ok) {
+            // Log the auto-reply error but do not fail the request overall, as domain verification might be pending
+            const autoErrorText = await autoReplyRes.text();
+            console.warn('Resend API Warning (Auto-Reply):', autoErrorText);
         }
 
         return new Response(JSON.stringify({ success: true }), {
