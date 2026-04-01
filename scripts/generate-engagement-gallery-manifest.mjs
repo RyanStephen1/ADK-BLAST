@@ -36,11 +36,32 @@ const getGalleryFolders = async () => {
 const getImagesForFolder = async (folderName) => {
   const folderPath = path.join(galleriesRoot, folderName);
   const entries = await fs.readdir(folderPath, { withFileTypes: true });
-
-  return entries
+  const rootImages = entries
     .filter((entry) => entry.isFile() && supportedExtensions.has(path.extname(entry.name).toLowerCase()))
-    .map((entry) => `/assets/engagement-galleries/${folderName}/${entry.name}`)
-    .sort(sortNaturally);
+    .map((entry) => ({
+      src: `/assets/engagement-galleries/${folderName}/${entry.name}`,
+      scopeId: null,
+    }));
+
+  const scopedImages = await Promise.all(
+    entries
+      .filter((entry) => entry.isDirectory())
+      .sort((left, right) => sortNaturally(left.name, right.name))
+      .map(async (entry) => {
+        const scopePath = path.join(folderPath, entry.name);
+        const scopeEntries = await fs.readdir(scopePath, { withFileTypes: true });
+
+        return scopeEntries
+          .filter((scopeEntry) => scopeEntry.isFile() && supportedExtensions.has(path.extname(scopeEntry.name).toLowerCase()))
+          .map((scopeEntry) => ({
+            src: `/assets/engagement-galleries/${folderName}/${entry.name}/${scopeEntry.name}`,
+            scopeId: entry.name,
+          }))
+          .sort((left, right) => sortNaturally(left.src, right.src));
+      }),
+  );
+
+  return [...rootImages, ...scopedImages.flat()].sort((left, right) => sortNaturally(left.src, right.src));
 };
 
 const generateManifestSource = async () => {
@@ -53,7 +74,7 @@ const generateManifestSource = async () => {
   );
 
   return [
-    'export const historyGalleryManifest: Record<string, string[]> = {',
+    'export const historyGalleryManifest: Record<string, Array<{ src: string; scopeId: string | null }>> = {',
     ...manifestEntries,
     '};',
     '',

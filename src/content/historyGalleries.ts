@@ -5,6 +5,7 @@ interface GalleryImage {
   src: string;
   filePath: string;
   alt: string;
+  scopeId: string | null;
 }
 
 const buildImageAlt = (engagementName: string, filePath: string) => {
@@ -14,10 +15,11 @@ const buildImageAlt = (engagementName: string, filePath: string) => {
 };
 
 export const historyGalleryImageMap = historyEngagements.reduce<Record<string, GalleryImage[]>>((acc, engagement) => {
-  acc[engagement.id] = (historyGalleryManifest[engagement.id] ?? []).map((src) => ({
-    src,
-    filePath: src,
-    alt: buildImageAlt(engagement.shortName, src),
+  acc[engagement.id] = (historyGalleryManifest[engagement.id] ?? []).map((image) => ({
+    src: image.src,
+    filePath: image.src,
+    alt: buildImageAlt(engagement.shortName, image.src),
+    scopeId: image.scopeId,
   }));
   return acc;
 }, {});

@@ -44,6 +44,10 @@ export const historyEngagements: HistoryEngagement[] = [
     galleryPath: '/history/gallery/imi',
     galleryIntro: 'A dedicated image gallery for IMI projects and field documentation. Add or remove images from the folder below and the page will update automatically.',
     galleryEmptyState: 'Add IMI project images to this folder and the gallery will populate automatically.',
+    scopes: [
+      { id: 'structural-steel', label: 'Structural Steel' },
+      { id: 'ship-repair', label: 'Ship Repair' },
+    ],
   },
   {
     id: 'siemens-energy',
@@ -56,6 +60,9 @@ export const historyEngagements: HistoryEngagement[] = [
     galleryPath: '/history/gallery/siemens-energy',
     galleryIntro: 'A dedicated image gallery for Siemens Energy work packages, site execution, and delivery records. Add or remove images from the folder below and the page will update automatically.',
     galleryEmptyState: 'Add Siemens Energy project images to this folder and the gallery will populate automatically.',
+    scopes: [
+      { id: 'blasting', label: 'Blasting' },
+    ],
   },
   {
     id: '1590-energy',
@@ -68,5 +75,10 @@ export const historyEngagements: HistoryEngagement[] = [
     galleryPath: '/history/gallery/1590-energy',
     galleryIntro: 'A dedicated image gallery for 1590 Energy operational support, plant activity, and project documentation. Add or remove images from the folder below and the page will update automatically.',
     galleryEmptyState: 'Add 1590 Energy project images to this folder and the gallery will populate automatically.',
+    scopes: [
+      { id: 'pipe-fabrication', label: 'Pipe Fabrication' },
+      { id: 'scaffolding', label: 'Scaffolding' },
+      { id: 'fuel-line', label: 'Fuel Line' },
+    ],
   },
 ];

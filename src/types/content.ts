@@ -34,6 +34,11 @@ export interface HistoryMilestone {
   desc: string;
 }
 
+export interface HistoryEngagementScope {
+  id: string;
+  label: string;
+}
+
 export interface HistoryEngagement {
   id: string;
   name: string;
@@ -45,6 +50,7 @@ export interface HistoryEngagement {
   galleryPath: string;
   galleryIntro: string;
   galleryEmptyState: string;
+  scopes: HistoryEngagementScope[];
 }
 
 export interface LegalSection {

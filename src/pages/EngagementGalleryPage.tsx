@@ -8,11 +8,20 @@ import { historyGalleryEntries } from '../content/historyGalleries';
 const EngagementGalleryPage = () => {
   const { engagementId } = useParams<{ engagementId: string }>();
   const engagement = historyGalleryEntries.find((item) => item.id === engagementId);
-  const imageCount = engagement?.images.length ?? 0;
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedScope, setSelectedScope] = useState('');
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasScopes = (engagement?.scopes.length ?? 0) > 0;
+  const filteredImages = !engagement
+    ? []
+    : selectedScope === 'all'
+      ? engagement.images
+      : selectedScope
+        ? engagement.images.filter((image) => image.scopeId === selectedScope)
+        : [];
+  const filteredImageCount = filteredImages.length;
 
   useEffect(() => {
     if (selectedIndex !== null) {
@@ -28,16 +37,16 @@ const EngagementGalleryPage = () => {
 
   const handleNext = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (selectedIndex === null || imageCount === 0) return;
-    setSelectedIndex((selectedIndex + 1) % imageCount);
+    if (selectedIndex === null || filteredImageCount === 0) return;
+    setSelectedIndex((selectedIndex + 1) % filteredImageCount);
     setScale(1);
     setOffset({ x: 0, y: 0 });
   };
 
   const handlePrev = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (selectedIndex === null || imageCount === 0) return;
-    setSelectedIndex((selectedIndex - 1 + imageCount) % imageCount);
+    if (selectedIndex === null || filteredImageCount === 0) return;
+    setSelectedIndex((selectedIndex - 1 + filteredImageCount) % filteredImageCount);
     setScale(1);
     setOffset({ x: 0, y: 0 });
   };
@@ -59,13 +68,13 @@ const EngagementGalleryPage = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
-      if (e.key === 'ArrowRight' && imageCount > 0) {
-        setSelectedIndex((selectedIndex + 1) % imageCount);
+      if (e.key === 'ArrowRight' && filteredImageCount > 0) {
+        setSelectedIndex((selectedIndex + 1) % filteredImageCount);
         setScale(1);
         setOffset({ x: 0, y: 0 });
       }
-      if (e.key === 'ArrowLeft' && imageCount > 0) {
-        setSelectedIndex((selectedIndex - 1 + imageCount) % imageCount);
+      if (e.key === 'ArrowLeft' && filteredImageCount > 0) {
+        setSelectedIndex((selectedIndex - 1 + filteredImageCount) % filteredImageCount);
         setScale(1);
         setOffset({ x: 0, y: 0 });
       }
@@ -74,7 +83,7 @@ const EngagementGalleryPage = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [imageCount, selectedIndex]);
+  }, [filteredImageCount, selectedIndex]);
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
@@ -157,6 +166,46 @@ const EngagementGalleryPage = () => {
                 </div>
               </div>
             </div>
+
+            {engagement.scopes.length > 0 && (
+              <div className="mt-10 border-t border-white/10 pt-8 sm:mt-12 sm:pt-10">
+                <div className="mb-4 text-[10px] font-black uppercase tracking-[0.32em] text-accent/80">
+                  Available Scope
+                </div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                  {engagement.scopes.map((scope, index) => {
+                    const isActive = selectedScope === scope.id;
+                    const itemNumber = String(index + 1).padStart(2, '0');
+
+                    return (
+                      <button
+                        key={scope.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedScope(isActive ? '' : scope.id);
+                          setSelectedIndex(null);
+                        }}
+                        className={`rounded-2xl border px-5 py-4 text-left transition-all duration-300 ${
+                          isActive
+                            ? 'border-accent bg-white text-on-background shadow-[0_20px_60px_rgba(0,0,0,0.18)]'
+                            : 'border-white/12 bg-white/6 text-white hover:border-white/24 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="mb-3 flex items-center justify-between gap-4">
+                          <span className={`text-[10px] font-black uppercase tracking-[0.28em] ${isActive ? 'text-primary' : 'text-accent'}`}>
+                            {itemNumber}
+                          </span>
+                          <span className={`h-2.5 w-2.5 rounded-full ${isActive ? 'bg-primary' : 'bg-white/30'}`} />
+                        </div>
+                        <div className={`text-base font-semibold leading-snug sm:text-lg ${isActive ? 'text-on-background' : 'text-white'}`}>
+                          {scope.label}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -171,20 +220,31 @@ const EngagementGalleryPage = () => {
           />
 
           <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
-            <div className="mb-10 flex flex-col gap-6 sm:mb-12 lg:flex-row lg:items-end lg:justify-between">
+            <div className="mb-10 space-y-6 sm:mb-12 sm:space-y-8">
               <div>
                 <span className="mb-4 block text-[11px] font-black uppercase tracking-[0.3em] text-primary">
                   Gallery
                 </span>
                 <h2 className="text-3xl font-extrabold uppercase italic tracking-tight text-on-background sm:text-4xl lg:text-5xl">
-                  {engagement.images.length > 0 ? 'Project image archive.' : 'Project gallery ready for uploads.'}
+                  {selectedScope
+                    ? `${engagement.scopes.find((scope) => scope.id === selectedScope)?.label ?? 'Selected Scope'} image archive.`
+                    : engagement.images.length > 0
+                      ? 'Project image archive.'
+                      : 'Project gallery ready for uploads.'}
                 </h2>
+                {hasScopes && (
+                  <p className="mt-4 max-w-2xl text-sm leading-7 text-on-surface-variant sm:text-base">
+                    {selectedScope
+                      ? 'Showing images only for the selected work scope.'
+                      : 'Select a work scope from the engagement header above to view the related project images.'}
+                  </p>
+                )}
               </div>
             </div>
 
-            {engagement.images.length > 0 ? (
+            {filteredImages.length > 0 ? (
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {engagement.images.map((image, index) => (
+                {filteredImages.map((image, index) => (
                   <button
                     type="button"
                     onClick={() => setSelectedIndex(index)}
@@ -212,10 +272,21 @@ const EngagementGalleryPage = () => {
                   </button>
                 ))}
               </div>
+            ) : hasScopes && !selectedScope ? (
+              <div className="rounded-[1.75rem] border border-white/60 bg-white/80 p-8 shadow-ambient sm:p-10 md:p-12">
+                <div className="rounded-[1.5rem] border border-dashed border-primary/20 bg-[linear-gradient(145deg,rgba(255,255,255,0.95),rgba(226,236,255,0.95))] px-6 py-16 text-center sm:px-10">
+                  <div className="mb-4 text-[11px] font-black uppercase tracking-[0.3em] text-primary">Select A Scope</div>
+                  <p className="mx-auto max-w-2xl text-sm leading-7 text-on-surface-variant sm:text-base">
+                    Choose a scope from the dropdown to view the related project images for {engagement.shortName}.
+                  </p>
+                </div>
+              </div>
             ) : (
               <div className="rounded-[1.75rem] border border-white/60 bg-white/80 p-8 shadow-ambient sm:p-10 md:p-12">
                 <div className="rounded-[1.5rem] border border-dashed border-primary/20 bg-[linear-gradient(145deg,rgba(255,255,255,0.95),rgba(226,236,255,0.95))] px-6 py-16 text-center sm:px-10">
-                  <div className="mb-4 text-[11px] font-black uppercase tracking-[0.3em] text-primary">No Images Yet</div>
+                  <div className="mb-4 text-[11px] font-black uppercase tracking-[0.3em] text-primary">
+                    {selectedScope === 'all' ? 'No Images Yet' : 'No Images For This Scope'}
+                  </div>
                   <p className="mx-auto max-w-2xl text-sm leading-7 text-on-surface-variant sm:text-base">
                     {engagement.galleryEmptyState} <span className="font-bold text-on-background">public/assets/engagement-galleries/{engagement.id}</span>
                   </p>
@@ -237,7 +308,7 @@ const EngagementGalleryPage = () => {
       </main>
 
       <AnimatePresence>
-        {selectedIndex !== null && engagement.images[selectedIndex] && (
+        {selectedIndex !== null && filteredImages[selectedIndex] && (
           <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -251,7 +322,7 @@ const EngagementGalleryPage = () => {
                   {engagement.shortName} Gallery
                 </span>
                 <h4 className="text-xl font-bold uppercase italic tracking-tighter text-white">
-                  {engagement.images[selectedIndex].alt}
+                  {filteredImages[selectedIndex].alt}
                 </h4>
               </div>
               <div className="flex flex-wrap items-center gap-3 sm:gap-4 md:gap-8">
@@ -286,8 +357,8 @@ const EngagementGalleryPage = () => {
 
                 <div className="flex h-full w-full items-center justify-center overflow-hidden pointer-events-none">
                   <m.img
-                    key={engagement.images[selectedIndex].filePath}
-                    src={engagement.images[selectedIndex].src}
+                    key={filteredImages[selectedIndex].filePath}
+                    src={filteredImages[selectedIndex].src}
                     drag={scale > 1}
                     dragElastic={0}
                     dragMomentum={false}
@@ -306,7 +377,7 @@ const EngagementGalleryPage = () => {
                       y: offset.y,
                     }}
                     className="pointer-events-auto max-h-full max-w-full select-none object-contain shadow-2xl"
-                    alt={engagement.images[selectedIndex].alt}
+                    alt={filteredImages[selectedIndex].alt}
                     decoding="async"
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   />
@@ -323,7 +394,7 @@ const EngagementGalleryPage = () => {
 
             <div className="relative z-30 border-t border-white/5 bg-on-background/90 p-4 text-center backdrop-blur-xl sm:p-6 md:p-8">
               <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40">
-                {selectedIndex + 1} of {engagement.images.length} gallery images
+                {selectedIndex + 1} of {filteredImageCount} gallery images
               </p>
             </div>
           </m.div>
