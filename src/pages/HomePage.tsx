@@ -407,8 +407,7 @@ const HomePage: React.FC = () => {
         <section className="relative overflow-hidden bg-white py-20 sm:py-24 md:py-32 xl:py-36">
           {/* Section ID or Coordinate Detail */}
           <div className="absolute top-24 right-10 label-sm text-primary/20 rotate-90 origin-right hidden xl:block">
-            COORD: 27.01N 49.67E // JUBAIL OPS
-          </div>
+       </div>
 
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 md:px-8 xl:px-10">
             <div className="mb-14 max-w-5xl sm:mb-16 md:mb-20 xl:mb-24">
@@ -635,7 +634,6 @@ const HomePage: React.FC = () => {
                     method="POST"
                     action="/?success=true#contact"
                     data-netlify="true"
-                    netlify
                     netlify-honeypot="bot-field"
                     encType="multipart/form-data"
                     onSubmit={handleContactSubmit}

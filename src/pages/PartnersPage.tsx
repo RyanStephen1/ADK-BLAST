@@ -236,8 +236,15 @@ const PartnersPage = () => {
                 <div className="relative h-[220px] w-full shrink-0 overflow-hidden bg-on-background sm:h-[280px] md:h-[340px] lg:h-[400px]">
                   <img
                     src={selectedPartner.coverImg ?? selectedPartner.logo}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full object-cover opacity-25 blur-sm"
+                    decoding="async"
+                  />
+                  <img
+                    src={selectedPartner.coverImg ?? selectedPartner.logo}
                     alt="Partner Technical Backdrop"
-                    className="w-full h-full object-cover opacity-60"
+                    className="absolute inset-x-0 bottom-0 h-full w-full object-contain object-bottom opacity-80"
                     decoding="async"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-on-background via-on-background/20 to-transparent"></div>
