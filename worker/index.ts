@@ -1,4 +1,4 @@
-import { onRequestPost } from '../functions/api/contact';
+import { handleContactPost } from './contactHandler';
 
 type AssetsBinding = {
   fetch: (input: Request | string | URL, init?: RequestInit) => Promise<Response>;
@@ -29,7 +29,7 @@ export default {
         return METHOD_NOT_ALLOWED;
       }
 
-      return onRequestPost({ request, env });
+      return handleContactPost(request, env);
     }
 
     return env.ASSETS.fetch(request);
