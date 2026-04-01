@@ -123,22 +123,55 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (fileError) {
-      e.preventDefault();
       setFormStatus('error');
       setErrorMessage('Attachment must be under 10MB before submitting.');
       return;
     }
 
     if (honeypotRef.current && honeypotRef.current.value) {
-      e.preventDefault();
       setFormStatus('success');
       return;
     }
 
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
     setFormStatus('loading');
     setErrorMessage('');
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Netlify submission failed with status ${response.status}`);
+      }
+
+      setFormStatus('success');
+      setContactForm({
+        name: '',
+        email: '',
+        service: defaultContactService,
+        specialization: defaultSpecialization,
+        message: '',
+        file: null,
+        consent: false,
+      });
+      setFileError('');
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch {
+      setFormStatus('error');
+      setErrorMessage('Submission failed. Please try again or contact us directly at sales@adknprotech.com.');
+    }
   };
 
   const specializationOptions = getSpecializationOptions(contactForm.service);
@@ -602,6 +635,7 @@ const HomePage: React.FC = () => {
                     method="POST"
                     action="/?success=true#contact"
                     data-netlify="true"
+                    netlify
                     netlify-honeypot="bot-field"
                     encType="multipart/form-data"
                     onSubmit={handleContactSubmit}
@@ -627,7 +661,20 @@ const HomePage: React.FC = () => {
                         <label className="block label-md text-on-surface-variant mb-3 font-black tracking-widest">Work Email</label>
                         <div className="relative">
                           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary scale-y-0 group-focus-within:scale-y-100 transition-transform duration-300"></div>
-                          <input name="email" value={contactForm.email} onChange={handleInputChange} required className="w-full bg-surface-container-low border-none focus:ring-0 px-6 py-5 text-on-surface font-bold uppercase text-sm tracking-widest transition-all" placeholder="Enter work email" type="email" />
+                          <input
+                            name="email"
+                            value={contactForm.email}
+                            onChange={handleInputChange}
+                            required
+                            autoComplete="email"
+                            inputMode="email"
+                            autoCapitalize="none"
+                            autoCorrect="off"
+                            spellCheck={false}
+                            className="w-full bg-surface-container-low border-none focus:ring-0 px-6 py-5 text-on-surface font-bold text-sm tracking-widest transition-all"
+                            placeholder="Enter work email"
+                            type="email"
+                          />
                         </div>
                       </div>
                     </div>
@@ -695,7 +742,7 @@ const HomePage: React.FC = () => {
                           <span className="label-md block break-all text-on-surface">{contactForm.file ? contactForm.file.name : 'Attach Technical Files'}</span>
                           <span className="text-xs uppercase tracking-tighter text-on-surface-variant sm:text-[14px]">PDF / DWG / STEP MAX 10MB</span>
                         </div>
-                        <input ref={fileInputRef} type="file" name="attachment" className="hidden" onChange={handleFileChange} />
+                        <input ref={fileInputRef} type="file" name="attachment" accept=".pdf,.dwg,.step,.stp" className="hidden" onChange={handleFileChange} />
                       </label>
 
                       <button className="w-full rounded-sm bg-primary px-8 py-4 text-sm font-black uppercase tracking-widest text-on-primary shadow-xl transition-all hover:-translate-y-1 hover:bg-on-background md:w-auto md:px-12 md:py-5 lg:px-16 lg:py-6" type="submit">
