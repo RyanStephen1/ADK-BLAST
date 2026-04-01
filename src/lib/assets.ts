@@ -94,3 +94,5 @@ export const assetPaths = {
     saudizationCertificate: asset('certifications/saudization-certificate.webp'),
   },
 } as const;
+
+

@@ -34,34 +34,41 @@ const HomePage: React.FC = () => {
     message: string;
     file: File | null;
     consent: boolean;
-  }>({ name: '', email: '', service: defaultContactService, specialization: defaultSpecialization, message: '', file: null, consent: false });
+  }>(() => {
+    if (typeof window === 'undefined') {
+      return { name: '', email: '', service: defaultContactService, specialization: defaultSpecialization, message: '', file: null, consent: false };
+    }
 
-  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const params = new URLSearchParams(window.location.search);
+    const requestedService = params.get('service');
+    const normalizedService = requestedService ? normalizeServiceQuery(requestedService) : defaultContactService;
+    const requestedSpecialization = params.get('specialization');
+
+    return {
+      name: '',
+      email: '',
+      service: normalizedService,
+      specialization: requestedSpecialization ? resolveSpecialization(normalizedService, requestedSpecialization) : defaultSpecialization,
+      message: '',
+      file: null,
+      consent: false,
+    };
+  });
+
+  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(() => {
+    if (typeof window === 'undefined') {
+      return 'idle';
+    }
+
+    return new URLSearchParams(window.location.search).get('success') === 'true' ? 'success' : 'idle';
+  });
   const [fileError, setFileError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const successParam = params.get('success');
-    const serviceParam = params.get('service');
-    const specializationParam = params.get('specialization');
-    let normalizedService = defaultContactService;
-
-    if (successParam === 'true') {
-      setFormStatus('success');
+    const successParam = params.get('success');    if (successParam === 'true') {
       window.history.replaceState({}, '', import.meta.env.BASE_URL);
-    }
-
-    if (serviceParam) {
-      normalizedService = normalizeServiceQuery(serviceParam);
-      setContactForm(prev => ({ ...prev, service: normalizedService, specialization: defaultSpecialization }));
-    }
-
-    if (specializationParam) {
-      setContactForm(prev => ({
-        ...prev,
-        specialization: resolveSpecialization(normalizedService, specializationParam)
-      }));
     }
 
     if (location.hash === '#contact') {
@@ -116,60 +123,22 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (fileError) return;
+  const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (fileError) {
+      e.preventDefault();
+      setFormStatus('error');
+      setErrorMessage('Attachment must be under 10MB before submitting.');
+      return;
+    }
+
     if (honeypotRef.current && honeypotRef.current.value) {
+      e.preventDefault();
       setFormStatus('success');
       return;
     }
 
     setFormStatus('loading');
     setErrorMessage('');
-
-    try {
-      const formData = new FormData(e.currentTarget);
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        let message = 'Submission failed';
-
-        try {
-          const payload = await response.json();
-          if (typeof payload?.error === 'string') {
-            message = payload.error;
-          }
-        } catch {
-          // Ignore invalid JSON and fall back to the generic message.
-        }
-
-        throw new Error(message);
-      }
-
-      setFormStatus('success');
-      setErrorMessage('');
-      setContactForm({
-        name: '',
-        email: '',
-        service: defaultContactService,
-        specialization: defaultSpecialization,
-        message: '',
-        file: null,
-        consent: false,
-      });
-      setFileError('');
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
-    } catch (err: unknown) {
-      console.error('Submission error:', err);
-      setErrorMessage(err instanceof Error ? err.message : 'Transmission error. Please try again.');
-      setFormStatus('error');
-    }
   };
 
   const specializationOptions = getSpecializationOptions(contactForm.service);
@@ -631,13 +600,17 @@ const HomePage: React.FC = () => {
                   <form
                     name="contact-inquiry"
                     method="POST"
+                    action="/?success=true#contact"
+                    data-netlify="true"
+                    netlify-honeypot="bot-field"
                     encType="multipart/form-data"
                     onSubmit={handleContactSubmit}
                     className="space-y-8 sm:space-y-10 md:space-y-12"
                   >
+                    <input type="hidden" name="form-name" value="contact-inquiry" />
                     {formStatus === 'error' && (
                       <div className="bg-red-50 text-red-700 p-4 text-xs font-bold uppercase tracking-widest border-l-2 border-red-500">
-                        {errorMessage || 'Transmission Error. Please verify your connection or contact us directly at sales@adknprotech.com.'}
+                        {errorMessage || 'Submission blocked. Please review the form or contact us directly at sales@adknprotech.com.'}
                       </div>
                     )}
                     <input type="text" name="bot-field" ref={honeypotRef} className="hidden" tabIndex={-1} autoComplete="off" />
@@ -751,3 +724,5 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+
+

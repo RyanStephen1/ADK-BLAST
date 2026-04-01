@@ -88,8 +88,6 @@
       height: auto
     }
 
-
-
     html {
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
@@ -186,15 +184,23 @@
 </head>
 
 <body>
-
-
-  <form name="contact-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <form
+    name="contact-inquiry"
+    method="POST"
+    action="/?success=true#contact"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    encType="multipart/form-data"
+    hidden
+  >
+    <input type="hidden" name="form-name" value="contact-inquiry" />
     <input type="text" name="name" />
     <input type="email" name="email" />
     <input type="text" name="service" />
     <input type="text" name="specialization" />
     <textarea name="message"></textarea>
     <input type="file" name="attachment" />
+    <input type="checkbox" name="consent" />
     <input type="text" name="bot-field" />
   </form>
   <div id="root"></div>
