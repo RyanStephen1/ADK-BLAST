@@ -5,15 +5,15 @@
   "type": "module",
   "scripts": {
     "predev": "node scripts/generate-engagement-gallery-manifest.mjs",
-    "prebuild": "node scripts/generate-engagement-gallery-manifest.mjs",
+    "prebuild": "node scripts/generate-engagement-gallery-manifest.mjs && node scripts/clean-cloudflare-build.mjs",
     "pretypecheck": "node scripts/generate-engagement-gallery-manifest.mjs",
     "prelint": "node scripts/generate-engagement-gallery-manifest.mjs",
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc -b",
     "lint": "eslint .",
-    "preview": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy"
+    "preview": "npm run build && wrangler dev --config dist/adk/wrangler.json",
+    "deploy": "npm run build && wrangler deploy --config dist/adk/wrangler.json"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",

@@ -53,6 +53,19 @@ const escapeHtml = (value: string) =>
 const formatMailbox = (email: string, name?: string) =>
   name ? `${name} <${email}>` : email;
 
+const toBase64 = (arrayBuffer: ArrayBuffer) => {
+  const bytes = new Uint8Array(arrayBuffer);
+  const chunkSize = 32768;
+  let binary = '';
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    const chunk = bytes.subarray(index, index + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+
+  return btoa(binary);
+};
+
 const sendSequenzyEmail = async (apiKey: string, payload: SequenzyPayload) => {
   const response = await fetch('https://api.sequenzy.com/api/v1/transactional/send', {
     method: 'POST',
@@ -132,7 +145,7 @@ export async function handleContactPost(request: Request, env: Env) {
 
       try {
         const arrayBuffer = await file.arrayBuffer();
-        const content = Buffer.from(arrayBuffer).toString('base64');
+        const content = toBase64(arrayBuffer);
         attachments.push({ filename: file.name, content });
       } catch (fileError) {
         const detail = fileError instanceof Error ? fileError.message : 'Unknown attachment error';
