@@ -11,7 +11,7 @@ const escapeHtml = (value: string) =>
 
 const getFileExtension = (filename: string) => {
   const parts = filename.split('.');
-  return parts.length > 1 ? parts.at(-1)?.toLowerCase() ?? '' : '';
+  return parts.length > 1 ? parts[parts.length - 1]?.toLowerCase() ?? '' : '';
 };
 
 export default {
