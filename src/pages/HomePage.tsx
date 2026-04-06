@@ -15,7 +15,6 @@ import {
 
 const HomePage: React.FC = () => {
   const location = useLocation();
-  const honeypotRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [bgIndex, setBgIndex] = useState(0);
 
@@ -105,22 +104,31 @@ const HomePage: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
+
     if (formStatus === 'error') {
       setFormStatus('idle');
     }
     if (errorMessage) {
       setErrorMessage('');
     }
-    if (selectedFile) {
-      if (selectedFile.size > 10 * 1024 * 1024) {
-        setFileError('File size must be under 10MB');
-        setContactForm(prev => ({ ...prev, file: null }));
-        if (fileInputRef.current) fileInputRef.current.value = '';
-      } else {
-        setFileError('');
-        setContactForm(prev => ({ ...prev, file: selectedFile }));
-      }
+
+    if (!selectedFile) {
+      setFileError('');
+      setContactForm(prev => ({ ...prev, file: null }));
+      return;
     }
+
+    if (selectedFile.size > 10 * 1024 * 1024) {
+      setFileError('File size must be under 10MB');
+      setContactForm(prev => ({ ...prev, file: null }));
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
+
+    setFileError('');
+    setContactForm(prev => ({ ...prev, file: selectedFile }));
   };
 
   const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -132,25 +140,30 @@ const HomePage: React.FC = () => {
       return;
     }
 
-    if (honeypotRef.current && honeypotRef.current.value) {
-      setFormStatus('success');
-      return;
-    }
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
     setFormStatus('loading');
     setErrorMessage('');
 
     try {
-      const response = await fetch('/', {
+      const formData = new FormData();
+      formData.set('name', contactForm.name);
+      formData.set('email', contactForm.email);
+      formData.set('service', contactForm.service);
+      formData.set('specialization', contactForm.specialization);
+      formData.set('message', contactForm.message);
+      formData.set('consent', String(contactForm.consent));
+
+      if (contactForm.file) {
+        formData.set('attachment', contactForm.file);
+      }
+
+      const response = await fetch('/api/contact', {
         method: 'POST',
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error(`Netlify submission failed with status ${response.status}`);
+        const payload = await response.json().catch(() => null) as { error?: string } | null;
+        throw new Error(payload?.error ?? `Submission failed with status ${response.status}`);
       }
 
       setFormStatus('success');
@@ -164,7 +177,6 @@ const HomePage: React.FC = () => {
         consent: false,
       });
       setFileError('');
-
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -631,21 +643,14 @@ const HomePage: React.FC = () => {
                 ) : (
                   <form
                     name="contact-inquiry"
-                    method="POST"
-                    action="/?success=true#contact"
-                    data-netlify="true"
-                    netlify-honeypot="bot-field"
-                    encType="multipart/form-data"
                     onSubmit={handleContactSubmit}
                     className="space-y-8 sm:space-y-10 md:space-y-12"
                   >
-                    <input type="hidden" name="form-name" value="contact-inquiry" />
                     {formStatus === 'error' && (
                       <div className="bg-red-50 text-red-700 p-4 text-xs font-bold uppercase tracking-widest border-l-2 border-red-500">
                         {errorMessage || 'Submission blocked. Please review the form or contact us directly at sales@adknprotech.com.'}
                       </div>
                     )}
-                    <input type="text" name="bot-field" ref={honeypotRef} className="hidden" tabIndex={-1} autoComplete="off" />
 
                     <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
                       <div className="relative group">
@@ -747,6 +752,11 @@ const HomePage: React.FC = () => {
                         {formStatus === 'loading' ? 'Transmitting...' : 'Submit Inquiry'}
                       </button>
                     </div>
+                    {fileError && (
+                      <div className="text-xs font-bold uppercase tracking-widest text-red-600">
+                        {fileError}
+                      </div>
+                    )}
                   </form>
                 )}
               </div>
