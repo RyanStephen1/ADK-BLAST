@@ -2,6 +2,8 @@ import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 // Plugin to inline CSS and eliminate the render-blocking external request
 const inlineCSSPlugin = (): Plugin => ({
   name: 'inline-css',
@@ -26,11 +28,7 @@ const inlineCSSPlugin = (): Plugin => ({
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    inlineCSSPlugin(),
-  ],
+  plugins: [react(), tailwindcss(), inlineCSSPlugin(), cloudflare()],
   build: {
     target: 'esnext',
     minify: 'esbuild',
