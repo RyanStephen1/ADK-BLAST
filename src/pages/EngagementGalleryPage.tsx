@@ -287,9 +287,7 @@ const EngagementGalleryPage = () => {
                   <div className="mb-4 text-[11px] font-black uppercase tracking-[0.3em] text-primary">
                     {selectedScope === 'all' ? 'No Images Yet' : 'No Images For This Scope'}
                   </div>
-                  <p className="mx-auto max-w-2xl text-sm leading-7 text-on-surface-variant sm:text-base">
-                    {engagement.galleryEmptyState} <span className="font-bold text-on-background">public/assets/engagement-galleries/{engagement.id}</span>
-                  </p>
+
                 </div>
               </div>
             )}

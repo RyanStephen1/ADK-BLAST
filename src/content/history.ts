@@ -42,7 +42,7 @@ export const historyEngagements: HistoryEngagement[] = [
     logo: assetPaths.partners.logos.imi,
     sector: 'Structural Steel & Ship Repair',
     galleryPath: '/history/gallery/imi',
-    galleryIntro: 'A dedicated image gallery for IMI projects and field documentation. Add or remove images from the folder below and the page will update automatically.',
+    galleryIntro: 'A dedicated image gallery for IMI projects and field documentation.',
     galleryEmptyState: 'Add IMI project images to this folder and the gallery will populate automatically.',
     scopes: [
       { id: 'structural-steel', label: 'Structural Steel' },
@@ -58,7 +58,7 @@ export const historyEngagements: HistoryEngagement[] = [
     logo: assetPaths.partners.logos.siemensEnergy,
     sector: 'Electromechanical Installation',
     galleryPath: '/history/gallery/siemens-energy',
-    galleryIntro: 'A dedicated image gallery for Siemens Energy work packages, site execution, and delivery records. Add or remove images from the folder below and the page will update automatically.',
+    galleryIntro: 'A dedicated image gallery for Siemens Energy work packages, site execution, and delivery records.',
     galleryEmptyState: 'Add Siemens Energy project images to this folder and the gallery will populate automatically.',
     scopes: [
       { id: 'blasting', label: 'Blasting' },
@@ -73,7 +73,7 @@ export const historyEngagements: HistoryEngagement[] = [
     logo: assetPaths.partners.logos.energy1590,
     sector: 'Power Generation Support',
     galleryPath: '/history/gallery/1590-energy',
-    galleryIntro: 'A dedicated image gallery for 1590 Energy operational support, plant activity, and project documentation. Add or remove images from the folder below and the page will update automatically.',
+    galleryIntro: 'A dedicated image gallery for 1590 Energy operational support, plant activity, and project documentation.',
     galleryEmptyState: 'Add 1590 Energy project images to this folder and the gallery will populate automatically.',
     scopes: [
       { id: 'pipe-fabrication', label: 'Pipe Fabrication' },
