@@ -191,8 +191,9 @@ const HomePage: React.FC = () => {
   return (
     <div className="bg-surface text-on-surface antialiased">
       <SEO
-        title="ADK Co., LTD | Industrial Precision & Engineering Excellence"
-        description="Global industrial services provider specializing in precision engineering, infrastructure maintenance, and maritime excellence since 1985."
+        title="ADK Co., LTD | Industrial Engineering Services & Products in Jubail, KSA"
+        description="Top industrial services provider in Jubail, KSA. Specializing in precision engineering, infrastructure maintenance, surface treatment, and industrial products since 1985."
+        keywords="industrial services Jubail, engineering products KSA, surface treatment Saudi Arabia, maritime excellence Jubail, ADK Jubail"
         path="/"
       />
 
@@ -379,7 +380,7 @@ const HomePage: React.FC = () => {
                           Our specialized shipyard operations and surface treatment solutions are built on the rigorous standards required for massive-scale maritime infrastructure.
                         </p>
                         <p>
-                          Strategically located in South Korea, Saudi Arabia, and the Philippines, ADK delivers rapid-response industrial solutions worldwide.
+                          Strategically located in South Korea, Jubail (Saudi Arabia), and the Philippines, ADK delivers rapid-response industrial products and solutions worldwide.
                         </p>
                       </div>
                     </div>

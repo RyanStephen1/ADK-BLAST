@@ -64,8 +64,9 @@ const ServicesPage = () => {
   return (
     <div className="bg-surface text-on-surface antialiased">
       <SEO
-        title="Services | ADK Co., LTD."
-        description="ADK Co., LTD. offers specialized industrial engineering services including Surface Preparation, Treatment, Piping Systems, Structural Steel, Insulation, Scaffolding, and Electromechanical solutions."
+        title="Industrial Engineering Services in Jubail, KSA | ADK Co., LTD."
+        description="ADK Co., LTD. offers specialized industrial engineering services and products in Jubail, KSA, including Surface Preparation, Piping Systems, Structural Steel, Insulation, and Electromechanical solutions."
+        keywords="industrial services Jubail, engineering services KSA, surface preparation Saudi Arabia, piping systems Jubail, structural steel KSA"
         path="/services"
       />
 

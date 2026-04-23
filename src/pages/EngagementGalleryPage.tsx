@@ -122,8 +122,9 @@ const EngagementGalleryPage = () => {
   return (
     <div className="min-h-screen bg-surface text-on-surface antialiased">
       <SEO
-        title={`${engagement.shortName} Project Gallery | ADK Co., LTD.`}
-        description={`Project gallery for ${engagement.name}.`}
+        title={`${engagement.shortName} Project Gallery | ADK Co., LTD. Jubail, KSA`}
+        description={`Project gallery for ${engagement.name}. Industrial engineering services and projects in Jubail, KSA.`}
+        keywords="industrial projects Jubail, engineering gallery KSA, ADK projects Saudi Arabia"
         path={engagement.galleryPath}
       />
 

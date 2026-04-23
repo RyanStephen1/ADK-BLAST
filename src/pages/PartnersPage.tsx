@@ -78,8 +78,9 @@ const PartnersPage = () => {
   return (
     <div className="bg-surface text-on-surface antialiased">
       <SEO
-        title="Global Partners | ADK Co., LTD."
-        description="Explore ADK Co., LTD.'s strategic alliances with global industry leaders across shipbuilding, energy, and maritime sectors."
+        title="Global Partners in Jubail, KSA | ADK Co., LTD."
+        description="Explore ADK Co., LTD.'s strategic alliances with global industry leaders across shipbuilding, energy, and maritime sectors in Jubail, KSA and worldwide."
+        keywords="industrial partners Jubail, global engineering alliances KSA, ADK strategic partners Saudi Arabia"
         path="/partners"
       />
 

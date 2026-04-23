@@ -119,8 +119,9 @@ const CertificationsPage = () => {
   return (
     <div className="bg-surface text-on-surface antialiased">
       <SEO
-        title="Certifications | ADK Co., LTD."
-        description="Official licenses, company registrations, and international ISO certifications supporting high-standard industrial delivery."
+        title="Certifications & Licenses in Jubail, KSA | ADK Co., LTD."
+        description="Official licenses, company registrations, and international ISO certifications supporting high-standard industrial delivery and services in Jubail, KSA."
+        keywords="industrial certifications Jubail, ISO certifications KSA, engineering licenses Saudi Arabia, ADK Co. LTD certifications"
         path="/certifications"
       />
 
