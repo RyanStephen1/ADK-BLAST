@@ -20,8 +20,8 @@ const SEO: React.FC<SEOProps> = ({
   structuredData,
   canonicalUrl,
 }) => {
-  const url = canonicalUrl || `https://adkme.com${path}`;
-  const defaultImage = "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&q=80&w=1200";
+  const url = canonicalUrl || `https://adknprotech.com${path}`;
+  const defaultImage = "https://adknprotech.com/assets/og-image.jpg"; // Updated to a local asset or consistent domain
 
   return (
     <Helmet>

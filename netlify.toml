@@ -6,3 +6,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# To satisfy the requirement of ensuring bots can read the content (SSR):
+# 1. Enable 'Prerendering' in the Netlify Site Settings (Build & Deploy -> Prerendering).
+# 2. This will ensure that bots see the fully rendered HTML even though this is an SPA.
