@@ -126,130 +126,10 @@
     }
   </style>
 
-  <!-- Critical CSS (inlined for zero render-blocking) -->
-  <style>
-    *,
-    ::after,
-    ::before {
-      box-sizing: border-box;
-      border-width: 0;
-      border-style: solid;
-      border-color: #e5e7eb
-    }
-
-    html {
-      line-height: 1.5;
-      -webkit-text-size-adjust: 100%;
-      font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      font-feature-settings: normal;
-      font-variation-settings: normal;
-      -webkit-tap-highlight-color: transparent
-    }
-
-    body {
-      margin: 0;
-      line-height: inherit
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto
-    }
-
-    html {
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      scroll-behavior: smooth
-    }
-
-    body {
-      background-color: #fff;
-      color: #141a32;
-      font-synthesis: none;
-      text-rendering: optimizeLegibility
-    }
-
-    .fixed {
-      position: fixed
-    }
-
-    .absolute {
-      position: absolute
-    }
-
-    .relative {
-      position: relative
-    }
-
-    .z-50 {
-      z-index: 50
-    }
-
-    .z-10 {
-      z-index: 10
-    }
-
-    .z-0 {
-      z-index: 0
-    }
-
-    .bg-white {
-      background-color: #fff
-    }
-
-    .bg-navy-900 {
-      background-color: #141a32
-    }
-
-    .text-white {
-      color: #fff
-    }
-
-    .text-on-surface {
-      color: #0A1128
-    }
-
-    .h-8 {
-      height: 2rem
-    }
-
-    .w-auto {
-      width: auto
-    }
-
-    .flex {
-      display: flex
-    }
-
-    .grid {
-      display: grid
-    }
-
-    .items-center {
-      align-items: center
-    }
-
-    .justify-between {
-      justify-content: between
-    }
-
-    .py-3 {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem
-    }
-
-    .shadow-ambient {
-      box-shadow: 0 16px 32px 0 rgba(20, 26, 50, 0.06)
-    }
-  </style>
-
   <!-- Preload critical assets -->
   <link rel="preload" as="image" href="/assets/home/hero/hero-1.webp"
     imagesrcset="/assets/home/hero/hero-1-480.webp 480w, /assets/home/hero/hero-1-768.webp 768w, /assets/home/hero/hero-1.webp 1346w"
     imagesizes="100vw" fetchpriority="high" />
-  <script type="module" src="/src/main.tsx"></script>
 </head>
 
 <body>
@@ -274,6 +154,7 @@
     <input type="text" name="bot-field" />
   </form>
   <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 
 </html>
