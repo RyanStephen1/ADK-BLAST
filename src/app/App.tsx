@@ -1,8 +1,8 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import Footer from '../components/Footer';
-import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { AppRoutes } from './routes';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <div className="flex flex-col min-h-screen font-sans">
           <Navbar />
           <main id="main-content" role="main" className="grow" tabIndex={-1}>
-            <Outlet />
+            <AppRoutes />
           </main>
           <Footer />
         </div>

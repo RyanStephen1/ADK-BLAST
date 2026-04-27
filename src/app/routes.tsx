@@ -34,99 +34,98 @@ type ExtendedRouteObject = RouteObject & {
 
 export const routes: ExtendedRouteObject[] = [
   {
-    element: <App />,
-    children: [
-      {
-        path: '/',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <HomePage />
-            </Suspense>
-          </>
-        ),
-      },
-      {
-        path: '/services',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <ServicesPage />
-            </Suspense>
-          </>
-        ),
-      },
-      {
-        path: '/history',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <HistoryPage />
-            </Suspense>
-          </>
-        ),
-      },
-      {
-        path: '/history/gallery/:engagementId',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <EngagementGalleryPage />
-            </Suspense>
-          </>
-        ),
-        getStaticPaths: () => {
-          return historyEngagements.map(e => `/history/gallery/${e.id}`);
-        },
-      },
-      {
-        path: '/certifications',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <CertificationsPage />
-            </Suspense>
-          </>
-        ),
-      },
-      {
-        path: '/partners',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <PartnersPage />
-            </Suspense>
-          </>
-        ),
-      },
-      {
-        path: '/privacy-policy',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <PrivacyPolicyPage />
-            </Suspense>
-          </>
-        ),
-      },
-      {
-        path: '/terms-of-service',
-        element: (
-          <>
-            <ScrollToTop />
-            <Suspense fallback={<RouteFallback />}>
-              <TermsOfServicePage />
-            </Suspense>
-          </>
-        ),
-      },
-    ],
+    path: '/',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <HomePage />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: '/services',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <ServicesPage />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: '/history',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <HistoryPage />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: '/history/gallery/:engagementId',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <EngagementGalleryPage />
+        </Suspense>
+      </>
+    ),
+    getStaticPaths: () => {
+      return historyEngagements.map(e => `/history/gallery/${e.id}`);
+    },
+  },
+  {
+    path: '/certifications',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <CertificationsPage />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: '/partners',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <PartnersPage />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: '/privacy-policy',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <PrivacyPolicyPage />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: '/terms-of-service',
+    element: (
+      <>
+        <ScrollToTop />
+        <Suspense fallback={<RouteFallback />}>
+          <TermsOfServicePage />
+        </Suspense>
+      </>
+    ),
   },
 ];
+
+export const AppRoutes = () => {
+  return useRoutes(routes);
+};
