@@ -11,7 +11,7 @@ const outputFile = path.join(projectRoot, 'public', 'sitemap.xml');
 const BASE_URL = 'https://adknprotech.com';
 
 const staticRoutes = [
-  '',
+  '/',
   '/services',
   '/history',
   '/certifications',
@@ -58,8 +58,8 @@ const generateSitemap = async () => {
     return `  <url>
     <loc>${BASE_URL}${route}</loc>
     <lastmod>${currentDate}</lastmod>
-    <changefreq>${route === '' ? 'weekly' : 'monthly'}</changefreq>
-    <priority>${route === '' ? '1.0' : '0.8'}</priority>
+    <changefreq>${route === '/' ? 'weekly' : 'monthly'}</changefreq>
+    <priority>${route === '/' ? '1.0' : '0.8'}</priority>
   </url>`;
   }).join('\n');
 

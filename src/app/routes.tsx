@@ -1,7 +1,8 @@
 import { Suspense, lazy, useEffect } from 'react';
 import type { RouteObject } from 'react-router-dom';
-import { useLocation, useRoutes } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { historyEngagements } from '../content/history';
+import App from './App';
 
 const HomePage = lazy(() => import('../pages/HomePage'));
 const ServicesPage = lazy(() => import('../pages/ServicesPage'));
@@ -26,100 +27,106 @@ const RouteFallback = () => (
   <div className="min-h-screen bg-[#0A1128]" aria-busy="true" />
 );
 
-export const routes: (RouteObject & { getStaticPaths?: () => string[] | Promise<string[]> })[] = [
+type ExtendedRouteObject = RouteObject & {
+  getStaticPaths?: () => string[] | Promise<string[]>;
+  children?: ExtendedRouteObject[];
+};
+
+export const routes: ExtendedRouteObject[] = [
   {
-    path: '/',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <HomePage />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: '/services',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <ServicesPage />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: '/history',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <HistoryPage />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: '/history/gallery/:engagementId',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <EngagementGalleryPage />
-        </Suspense>
-      </>
-    ),
-    getStaticPaths: () => {
-      return historyEngagements.map(e => `/history/gallery/${e.id}`);
-    },
-  },
-  {
-    path: '/certifications',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <CertificationsPage />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: '/partners',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <PartnersPage />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: '/privacy-policy',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <PrivacyPolicyPage />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: '/terms-of-service',
-    element: (
-      <>
-        <ScrollToTop />
-        <Suspense fallback={<RouteFallback />}>
-          <TermsOfServicePage />
-        </Suspense>
-      </>
-    ),
+    element: <App />,
+    children: [
+      {
+        path: '/',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <HomePage />
+            </Suspense>
+          </>
+        ),
+      },
+      {
+        path: '/services',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <ServicesPage />
+            </Suspense>
+          </>
+        ),
+      },
+      {
+        path: '/history',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <HistoryPage />
+            </Suspense>
+          </>
+        ),
+      },
+      {
+        path: '/history/gallery/:engagementId',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <EngagementGalleryPage />
+            </Suspense>
+          </>
+        ),
+        getStaticPaths: () => {
+          return historyEngagements.map(e => `/history/gallery/${e.id}`);
+        },
+      },
+      {
+        path: '/certifications',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <CertificationsPage />
+            </Suspense>
+          </>
+        ),
+      },
+      {
+        path: '/partners',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <PartnersPage />
+            </Suspense>
+          </>
+        ),
+      },
+      {
+        path: '/privacy-policy',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <PrivacyPolicyPage />
+            </Suspense>
+          </>
+        ),
+      },
+      {
+        path: '/terms-of-service',
+        element: (
+          <>
+            <ScrollToTop />
+            <Suspense fallback={<RouteFallback />}>
+              <TermsOfServicePage />
+            </Suspense>
+          </>
+        ),
+      },
+    ],
   },
 ];
-
-export const AppRoutes = () => {
-  return useRoutes(routes);
-};
