@@ -1,18 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.adknprotech.com"
-        }
-      ],
-      "destination": "https://adknprotech.com/:path*",
-      "permanent": true
-    }
-  ],
   "cleanUrls": true,
   "trailingSlash": false
 }
